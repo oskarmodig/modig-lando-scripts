@@ -27,7 +27,7 @@ process_variables() {
 
     # Loop through all environment variables
     for var in $(compgen -v); do
-        if [[ $var == $PATTERN ]]; then
+        if [[ $var == "$PATTERN" ]]; then
             # Construct the new variable name
             if [[ $include_test == "yes" ]]; then
                 new_var_name="MOD_VAR_${var#MOD_VAR__${MOD_INP_ENV}_TEST__}"

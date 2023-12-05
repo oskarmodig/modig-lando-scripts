@@ -39,6 +39,7 @@ case $MOD_READ_ACTION in
 
   u)
     echo_progress "You've chosen only to publish."
+    MOD_LOC_SKIP_PUBLISH=false
     ;;
 
   g)
