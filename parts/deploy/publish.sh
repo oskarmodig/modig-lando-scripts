@@ -2,20 +2,26 @@
 
 # Script for deploying files to a remote server
 
-change_dir "/deploy/v$MOD_VAR_VER/downloadsflo" "Package path not found." true
+if [ -n "$MOD_INP_TEST" ]; then
+    MOD_LOC_DLF_DIR="$MOD_VAR_PACKAGE_PATH/deploy/test/v$MOD_LOC_PACKAGE_VER/downloadsflo"
+else
+    MOD_LOC_DLF_DIR="$MOD_VAR_PACKAGE_PATH/deploy/v$MOD_LOC_PACKAGE_VER/downloadsflo"
+fi
 
-# Check for the MOD_VAR_DLF variable and set MOD_VAR_FILE_1 to its value if it is set
-if [ -n "$MOD_VAR_DLF" ]; then
+change_dir "$MOD_LOC_DLF_DIR" "Publish DLF path not found."
+
+# Check for the MOD_VAR_DLF_NAME variable and set MOD_VAR_FILE_1 to its value if it is set
+if [ -n "$MOD_VAR_DLF_NAME" ]; then
   # Add -test to the file name if MOD_INP_TEST is set, prepping for publish.
     if [ -n "$MOD_INP_TEST" ]; then
-        MOD_VAR_DLF="$MOD_VAR_DLF-test"
+        MOD_VAR_DLF_NAME="$MOD_VAR_DLF_NAME-test"
     fi
-    MOD_VAR_FILE_1="$MOD_VAR_DLF"
+    MOD_VAR_FILE_1="$MOD_VAR_DLF_NAME"
 fi
 
 # Check for required variables
-if [ -z "$MOD_VAR_VER" ] || [ -z "$MOD_VAR_REMOTE_HOST" ] || [ -z "$MOD_VAR_FILE_1" ] || [ -z "$MOD_VAR_TARGET_USER" ] || [ -z "$MOD_VAR_TARGET_GROUP" ]; then
-    exit_script "You have to set MOD_VAR_VER, MOD_VAR_REMOTE_HOST, MOD_VAR_FILE_1, MOD_VAR_TARGET_USER, and MOD_VAR_TARGET_GROUP"
+if [ -z "$MOD_LOC_PACKAGE_VER" ] || [ -z "$MOD_VAR_REMOTE_HOST" ] || [ -z "$MOD_VAR_FILE_1" ] || [ -z "$MOD_VAR_TARGET_USER" ] || [ -z "$MOD_VAR_TARGET_GROUP" ] || [ -z "$MOD_VAR_TARGET_DIR" ]; then
+    exit_script "You have to set MOD_LOC_PACKAGE_VER, MOD_VAR_REMOTE_HOST, MOD_VAR_FILE_1, MOD_VAR_TARGET_USER, MOD_VAR_TARGET_GROUP, and MOD_VAR_TARGET_DIR"
 fi
 
 # Default values
@@ -23,10 +29,6 @@ MOD_VAR_REMOTE_USER=${MOD_VAR_REMOTE_USER:-"ubuntu"}
 MOD_VAR_CERT_FILE=${MOD_VAR_CERT_FILE:-"cert.pem"}
 MOD_VAR_CERT_PATH=${MOD_VAR_CERT_PATH:-"/lando/ssh"}
 MOD_VAR_FILE_2=${MOD_VAR_FILE_2:-""}
-MOD_VAR_TARGET_DIR=${MOD_VAR_TARGET_DIR:-"/var/www/publishing_test/public_html/plugin"}
-
-# Set the local directory based on the package version
-LOCAL_DIR="./deploy/v$MOD_VAR_VER/downloadsflo"
 
 # Check if MOD_VAR_FILE_2 is not set and MOD_VAR_FILE_1 has no extension
 if [[ -z "$MOD_VAR_FILE_2" && ! "$MOD_VAR_FILE_1" =~ \..+$ ]]; then
@@ -36,23 +38,17 @@ fi
 
 # Create the archive file name if MOD_VAR_ARCHIVE_FILE is set
 if [[ -n "$MOD_VAR_ARCHIVE_FILE" ]]; then
-    MOD_VAR_ARCHIVE_FILE="${MOD_VAR_FILE_1%.*}_v$MOD_VAR_VER.${MOD_VAR_FILE_1##*.}"
+    MOD_VAR_ARCHIVE_FILE="${MOD_VAR_FILE_1%.*}_v$MOD_LOC_PACKAGE_VER.${MOD_VAR_FILE_1##*.}"
 fi
 
-# Derive full paths for the files using LOCAL_DIR
-MOD_VAR_FILE_1="$LOCAL_DIR/$MOD_VAR_FILE_1"
-MOD_VAR_FILE_2="$LOCAL_DIR/$MOD_VAR_FILE_2"
-MOD_VAR_CERT_PATH="$MOD_VAR_CERT_PATH/$MOD_VAR_CERT_FILE"
+# Derive full paths for the cert file
+MOD_LOC_CERT_FILEPATH="$MOD_VAR_CERT_PATH/$MOD_VAR_CERT_FILE"
 
-# Function to perform the SCP transfer
-perform_scp_transfer() {
-    scp -i "$MOD_VAR_CERT_PATH" "$MOD_VAR_FILE_1" "$MOD_VAR_FILE_2" "$MOD_VAR_REMOTE_USER@$MOD_VAR_REMOTE_HOST":~
-}
 
 # Copy files to remote server using scp with retry mechanism
 while true; do
-    echo "Copying files to remote server..."
-    perform_scp_transfer
+    echo "Copying files to remote server: $MOD_VAR_REMOTE_USER@$MOD_VAR_REMOTE_HOST"
+    scp -i "$MOD_LOC_CERT_FILEPATH" "$MOD_VAR_FILE_1" "$MOD_VAR_FILE_2" "$MOD_VAR_REMOTE_USER@$MOD_VAR_REMOTE_HOST":~
 
     if [[ $? -eq 0 ]]; then
         echo "Files copied successfully!"
@@ -67,7 +63,7 @@ while true; do
 done
 
 # 2. Log in to the same server over ssh and execute subsequent commands
-ssh -i "$MOD_VAR_CERT_PATH" "$MOD_VAR_REMOTE_USER@$MOD_VAR_REMOTE_HOST" << ENDSSH
+ssh -i "$MOD_LOC_CERT_FILEPATH" "$MOD_VAR_REMOTE_USER@$MOD_VAR_REMOTE_HOST" << ENDSSH
     # Define variables directly
     MOD_VAR_FILE_1='${MOD_VAR_FILE_1##*/}'
     MOD_VAR_FILE_2='${MOD_VAR_FILE_2##*/}'

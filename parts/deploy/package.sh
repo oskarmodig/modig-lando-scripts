@@ -1,27 +1,25 @@
 #!/bin/bash
 
-
-
 change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
 
-# Check for required input parameters and set default values
-echo_progress "Checking input for packaging"
-if [ -z "$MOD_VAR_WP" ] && [ -z "$MOD_VAR_DLF" ]; then
-    exit_script "You have to set MOD_VAR_WP, MOD_VAR_DLF, or both"
-fi
-
-
 # Set up the temporary directory
-TEMP_DIR=$MOD_VAR_PACKAGE
+MOD_LOC_TEMP_DIR=$MOD_VAR_MAIN_WP_NAME
 
 if [ -n "$MOD_INP_TEST" ]; then
-    TEMP_DIR="$TEMP_DIR-test"
+    MOD_LOC_TEMP_DIR="$MOD_LOC_TEMP_DIR-test"
 fi
 
 # Remove existing deploy directory, and create the temporary directory for the package
+
+if [ -n "$MOD_INP_TEST" ]; then
+    MOD_LOC_DESTINATION_DIR="$MOD_VAR_PACKAGE_PATH/deploy/test/v$MOD_LOC_PACKAGE_VER"
+else
+    MOD_LOC_DESTINATION_DIR="$MOD_VAR_PACKAGE_PATH/deploy/v$MOD_LOC_PACKAGE_VER"
+fi
+
 echo_progress "Preparing for deployment"
-remove_dir "deploy/v$MOD_VAR_VER"
-create_dir "deploy/_tmp/$TEMP_DIR"
+remove_dir "$MOD_LOC_DESTINATION_DIR"
+create_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 
 # Run composer operations if specified
 if [ -n "$MOD_VAR_RUN_COMPOSER" ]; then
@@ -33,7 +31,6 @@ fi
 # The script excludes certain files and directories from being copied
 rsync_options=(
     -av
-    --exclude "/$TEMP_DIR"
     --exclude="/.*"
     --exclude="/*.env"
     --exclude /node_modules
@@ -57,7 +54,7 @@ rsync_options=(
 if [ -z "$MOD_VAR_SKIP_VENDOR" ]; then
     rsync_options+=( --exclude /vendor )
 fi
-rsync "${rsync_options[@]}" . "deploy/tmp/$TEMP_DIR"
+rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 change_dir "deploy/_tmp" "Temporary directory not found." true
 
 # Function to create a zip file
@@ -67,22 +64,21 @@ create_zip() {
     local include_dir="$3"     # Whether to include the source directory in the zip file (or just the contents)
     local copy_json="$4"       # Whether to copy the JSON file
 
-    local source_dir="$TEMP_DIR"                     # Source directory to zip
+    local source_dir="$MOD_LOC_TEMP_DIR"                     # Source directory to zip
     local json_destination_name="$MOD_VAR_JSON.json" # Name of the destination JSON file
-
-    # Rename $TEMP_DIR if not already named as base_name
-    if [ "$TEMP_DIR" != "$base_name" ]; then
-        mv "$TEMP_DIR" "$base_name"
-        source_dir="$base_name"
-    fi
 
     if [ -n "$MOD_INP_TEST" ]; then
         base_name="$base_name-test"
         json_destination_name="$MOD_VAR_JSON-test.json"
     fi
 
-    echo_progress "Creating file for $destination_dir"
+    # Rename $MOD_LOC_TEMP_DIR if not already named as base_name
+    if [ "$MOD_LOC_TEMP_DIR" != "$base_name" ]; then
+        mv "$MOD_LOC_TEMP_DIR" "$base_name"
+        source_dir="$base_name"
+    fi
 
+    echo_progress "Creating file for $destination_dir"
 
     # Save the current directory
     local original_dir
@@ -95,7 +91,7 @@ create_zip() {
         zip -r "$(basename "$base_name")".zip "$source_dir"
     fi
 
-    move_dir="$MOD_VAR_PACKAGE_PATH/deploy/v$MOD_VAR_VER/$destination_dir"
+    move_dir="$MOD_LOC_DESTINATION_DIR/$destination_dir"
 
     # Move the zip file to its destination
     create_dir "$move_dir"
@@ -116,20 +112,20 @@ create_zip() {
       fi
     fi
 
-    # Rename $TEMP_DIR back to its original name
-    if [ "$TEMP_DIR" != "$base_name" ]; then
-        mv "$base_name" "$TEMP_DIR"
+    # Rename $MOD_LOC_TEMP_DIR back to its original name
+    if [ "$MOD_LOC_TEMP_DIR" != "$base_name" ]; then
+        mv "$base_name" "$MOD_LOC_TEMP_DIR"
     fi
 }
 
 # Always create main zip file for WP
-create_zip "$MOD_VAR_PACKAGE" "wp" true false
+create_zip "$MOD_VAR_MAIN_WP_NAME" "wp" true false
 
 # Maybe create zip files for downloadsflo,
-if [ -n "$MOD_VAR_DLF" ]; then
-    create_zip "$MOD_VAR_DLF" "downloadsflo" false true
+if [ -n "$MOD_VAR_DLF_NAME" ]; then
+    create_zip "$MOD_VAR_DLF_NAME" "downloadsflo" false true
     # shellcheck disable=SC2034
-    MOD_VAR_SKIP_PUBLISH=false #Enables running publish script after this.
+    MOD_LOC_SKIP_PUBLISH=false #Enables running publish script after this.
 else
     echo_notice "Skip creating file for downloadsflo"
 fi

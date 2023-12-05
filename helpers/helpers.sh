@@ -17,14 +17,20 @@ change_dir() {
       CD_PATH="$1"
   fi
 
-  MESSAGE=${$2:-"Could not change directory."}
+  MESSAGE=${2:-"Could not change directory."}
   cd "$CD_PATH" || exit_script "$MESSAGE Path: $CD_PATH"
   echo_progress "Changed directory to $CD_PATH"
 }
 
 # Function to handle composer operations
 handle_composer() {
+  return
   local composer_params="--no-dev --optimize-autoloader"
+
+  local original_dir
+  original_dir=$(pwd)
+
+  change_dir "$MOD_VAR_PACKAGE_PATH" "Could not change dir for composer"
 
   # If the first parameter is true, clear the additional parameters to reset composer for development
   if [ "$1" = "true" ]; then
@@ -40,4 +46,6 @@ handle_composer() {
     # shellcheck disable=SC2086
     composer update $composer_params
   fi
+
+  change_dir "$original_dir" "Original dir not found."
 }

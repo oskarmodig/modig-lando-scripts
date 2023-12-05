@@ -30,3 +30,15 @@ exit_script() {
   echo
   exit 1;
 }
+
+# Function to check required variables
+check_required_vars() {
+    local error_message=$1
+    shift  # Shift arguments so we can iterate over the rest of them
+
+    for var in "$@"; do
+        if [ -z "${!var}" ]; then
+            exit_script "$error_message"
+        fi
+    done
+}
