@@ -128,6 +128,8 @@ create_zip "$MOD_VAR_PACKAGE" "wp" true false
 # Maybe create zip files for downloadsflo,
 if [ -n "$MOD_VAR_DLF" ]; then
     create_zip "$MOD_VAR_DLF" "downloadsflo" false true
+    # shellcheck disable=SC2034
+    MOD_VAR_SKIP_PUBLISH=false #Enables running publish script after this.
 else
     echo_notice "Skip creating file for downloadsflo"
 fi

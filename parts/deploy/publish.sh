@@ -2,7 +2,7 @@
 
 # Script for deploying files to a remote server
 
-change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
+change_dir "/deploy/v$MOD_VAR_VER/downloadsflo" "Package path not found." true
 
 # Check for the MOD_VAR_DLF variable and set MOD_VAR_FILE_1 to its value if it is set
 if [ -n "$MOD_VAR_DLF" ]; then

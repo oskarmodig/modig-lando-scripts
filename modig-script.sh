@@ -56,7 +56,7 @@ if [ -z "$MOD_VAR_PACKAGE" ]; then
     if [ -n "$LANDO_APP_NAME" ]; then
         MOD_VAR_PACKAGE=$LANDO_APP_NAME
     else
-        exit_script "You have to supply a plugin/theme name in MOD_VAR_PACKAGE"
+        exit_script "You have to supply a plugin/theme name in MOD_VAR_PACKAGE, not found from LANDO_APP_NAME."
     fi
 fi
 

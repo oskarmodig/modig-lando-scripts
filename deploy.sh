@@ -4,6 +4,10 @@
 #
 # MOD_VAR_DLF: Name of the zip file for DownloadsFlo
 
+
+# shellcheck disable=SC2034
+MOD_VAR_SKIP_PUBLISH=true # Disables running publish by default, unless MOD_VAR_DLF is set. See parts/deploy/publish.sh
+
 echo_progress "Start deploy"
 
 echo_prompt "What do you want to do? Type the letter of the action you want to take:" true
@@ -22,7 +26,11 @@ case $ACTION in
     ;;
 
   u)
-    echo_progress "You've chosen to only publish."
+    echo_progress "You've chosen only to publish."
+    ;;
+
+  g)
+    echo_progress "You've chosen only create a git tag."
     ;;
 
   a)
@@ -43,19 +51,44 @@ if [ -z "$MOD_VAR_VER" ]; then
 fi
 echo_progress "Package version: $MOD_VAR_VER"
 
+# If $ACTION is g or a, prompt for the git tag message
+if [[ "$ACTION" =~ [ga] ]]; then
+    echo_prompt "Enter a git tag message:" true
+    read -r MOD_VAR_GIT_TAG_MSG
+fi
+
+
+execute_part() {
+  # if variable MOD_VAR_SKIP_$1 is set to true, skip the part
+  if [[ "${!MOD_VAR_SKIP_$1}" == true ]]; then
+    echo_progress "Skipping $1"
+    return
+  fi
+
+  if [ -f "$DIR/parts/deploy/$1.sh" ]; then
+    # shellcheck disable=SC1090
+    . "$DIR/parts/deploy/$1.sh"
+  fi
+}
+
 
 case $ACTION in
 
   p)
-    . "$DIR/parts/package.sh"
+    execute_part "package"
     ;;
 
   u)
-    . "$DIR/parts/publish.sh"
+    execute_part "publish"
+    ;;
+
+  g)
+    execute_part "git-tag"
     ;;
 
   a)
-    . "$DIR/parts/package.sh"
-    . "$DIR/parts/publish.sh"
+    execute_part "package"
+    execute_part "publish"
+    execute_part "git-tag"
     ;;
 esac
