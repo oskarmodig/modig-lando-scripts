@@ -16,30 +16,16 @@ MOD_INP_ENV=${MOD_INP_ENV^^}
 
 # Define the function with a parameter to determine the pattern
 process_variables() {
-    local include_test=$1  # This parameter determines if TEST__ should be included in the pattern
+    local include_test=$1
+    local pattern_prefix="MOD_VAR__${MOD_INP_ENV}"
+    [ "$include_test" == "yes" ] && pattern_prefix="${pattern_prefix}_TEST"
 
-    # Determine the pattern based on the include_test parameter
-    if [[ $include_test == "yes" ]]; then
-        PATTERN="MOD_VAR__${MOD_INP_ENV}_TEST__*"
-    else
-        PATTERN="MOD_VAR__${MOD_INP_ENV}__*"
-    fi
-
-    # Loop through all environment variables
     for var in $(compgen -v); do
-        if [[ $var == "$PATTERN" ]]; then
-            # Construct the new variable name
-            if [[ $include_test == "yes" ]]; then
-                new_var_name="MOD_VAR_${var#MOD_VAR__${MOD_INP_ENV}_TEST__}"
-            else
-                new_var_name="MOD_VAR_${var#MOD_VAR__${MOD_INP_ENV}__}"
-            fi
-
-            # Assign the value of the old variable to the new one
+        if [[ $var == ${pattern_prefix}* ]]; then
+            # Remove the pattern prefix and the following underscore
+            new_var_suffix="${var#${pattern_prefix}_}"
+            new_var_name="MOD_VAR$new_var_suffix"
             eval "$new_var_name='${!var}'"
-
-            # Unset the old variable
-            unset "$var"
         fi
     done
 }

@@ -66,7 +66,7 @@ fi
 echo_progress "Getting package version"
 
 MOD_LOC_PACKAGE_VER=$(wp "$MOD_VAR_PACKAGE_TYPE" list --path="$MOD_VAR_WP_PATH" --name="$MOD_VAR_PACKAGE_NAME" --field=version)
-check_required_vars "Plugin/Theme version not found." MOD_LOC_PACKAGE_VER
+check_required_vars "Version for package of typ $MOD_VAR_PACKAGE_TYPE version not found, name: $MOD_VAR_PACKAGE_NAME, WP Path: $MOD_VAR_WP_PATH." MOD_LOC_PACKAGE_VER
 
 echo_progress "Package version: $MOD_LOC_PACKAGE_VER"
 
