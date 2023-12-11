@@ -24,7 +24,7 @@ create_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 # Run composer operations if specified
 if [ -n "$MOD_VAR_RUN_COMPOSER" ]; then
     handle_composer
-    unset MOD_VAR_SKIP_VENDOR
+    unset MOD_VAR_EXCLUDE_VENDOR
 fi
 
 # Define and execute rsync options to copy files to the temporary directory
@@ -51,7 +51,7 @@ rsync_options=(
     --exclude "package-lock.json"
     --exclude "phpunit.xml.dist"
 )
-if [ -z "$MOD_VAR_SKIP_VENDOR" ]; then
+if [ -n "$MOD_VAR_EXCLUDE_VENDOR" ]; then
     rsync_options+=( --exclude /vendor )
 fi
 rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
