@@ -21,14 +21,15 @@ fi
 
 echo_progress "Start deploy"
 
-echo_prompt "What do you want to do? Type the letter of the action you want to take:" true
+echo_prompt "There are multiple deploy parts available:" true
 echo
 echo_prompt "p. Package files ready for deploy" true
 echo_prompt "u. Publish (upload) package files" true
 echo_prompt "g. Create a git tag" true
 echo_prompt "a. All of the above" true
 echo
-read -r MOD_READ_ACTION
+read -r -p "Type the letter of the action you want to take: " -n 1
+MOD_READ_ACTION=$REPLY
 
 
 case $MOD_READ_ACTION in

@@ -124,4 +124,4 @@ if [[ $? -ne 0 ]]; then
     exit_script "Failed to execute remote commands."
 fi
 
-echo "Script execution completed successfully!"
+echo_progress "Publishing done!"
