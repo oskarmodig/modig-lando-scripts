@@ -24,7 +24,6 @@ change_dir() {
 
 # Function to handle composer operations
 handle_composer() {
-  return
   local composer_params="--no-dev --optimize-autoloader"
 
   local original_dir
@@ -48,4 +47,8 @@ handle_composer() {
   fi
 
   change_dir "$original_dir" "Original dir not found."
+}
+
+url_encode() {
+  python3 -c "import urllib.parse; print(urllib.parse.quote_plus('$1'))"
 }

@@ -9,7 +9,7 @@
 #
 # MOD_VAR_EXCLUDE_VENDOR:   If set, the vendor dir is not copied to the package.
 #
-# MOD_VAR_TAG_PREFIX:    Prefix for git tags. Added before package version. Defaults to "v", so tag would be "v1.0.0".
+# MOD_VAR_GIT_TAG_PREFIX:    Prefix for git tags. Added before package version. Defaults to "v", so tag would be "v1.0.0".
 
 
 # shellcheck disable=SC2034
@@ -58,8 +58,7 @@ esac
 
 # If $MOD_READ_ACTION is g or a, and MOD_LOC_SKIP_GIT_TAG is not set to true, prompt for the git tag message
 if [[ "$MOD_READ_ACTION" =~ [ga] && "$MOD_LOC_SKIP_GIT_TAG" != true ]]; then
-    echo_prompt "Enter a git tag message:" true
-    read -r MOD_READ_GIT_TAG_MSG
+    . "$DIR/parts/deploy/git-tag-prep.sh"
 fi
 
 

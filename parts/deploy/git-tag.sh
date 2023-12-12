@@ -1,7 +1,22 @@
 #!/bin/bash
 
-MOD_VAR_TAG_PREFIX=${MOD_VAR_TAG_PREFIX:-"v"}
+MOD_VAR_GIT_TAG_PREFIX=${MOD_VAR_GIT_TAG_PREFIX:-"v"}
 
-# Using the variables in the git tag command
-git tag -a "${MOD_VAR_TAG_PREFIX}${MOD_LOC_PACKAGE_VER}" -m "${MOD_READ_GIT_TAG_MSG}"
-git push --follow-tags
+# URL encode the password
+MOD_READ_GIT_PASSWORD=$(url_encode "${MOD_READ_GIT_PASSWORD}")
+
+exit_script "TEMP ABORT"
+
+# Create the tag
+tag="${MOD_VAR_GIT_TAG_PREFIX}${MOD_LOC_PACKAGE_VER}"
+if ! git tag -a "$tag" -m "${MOD_READ_GIT_TAG_MSG}"; then
+  exit_script "Failed to create git tag"
+fi
+
+# Push the tag to the remote repository
+repo_url="https://${MOD_VAR_GIT_USERNAME}:${MOD_READ_GIT_PASSWORD}@gitlab.com/${MOD_VAR_GIT_REPO}"
+
+if ! git push "$repo_url" --follow-tags; then
+  exit_script "Failed to push the git tag"
+fi
+echo_progress "Git tag created and pushed to remote repository"
