@@ -5,8 +5,6 @@ MOD_VAR_GIT_TAG_PREFIX=${MOD_VAR_GIT_TAG_PREFIX:-"v"}
 # URL encode the password
 MOD_READ_GIT_PASSWORD=$(url_encode "${MOD_READ_GIT_PASSWORD}")
 
-exit_script "TEMP ABORT"
-
 # Create the tag
 tag="${MOD_VAR_GIT_TAG_PREFIX}${MOD_LOC_PACKAGE_VER}"
 if ! git tag -a "$tag" -m "${MOD_READ_GIT_TAG_MSG}"; then
