@@ -76,7 +76,6 @@ MOD_VAR_WP_PATH=${MOD_VAR_WP_PATH:-"wordpress"}
 
 # Go to package path
 change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
-echo_progress "$(pwd)"
 
 
 # SELECT SCRIPT TO RUN
