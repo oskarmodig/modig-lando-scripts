@@ -54,6 +54,13 @@ rsync_options=(
 if [ -n "$MOD_VAR_EXCLUDE_VENDOR" ]; then
     rsync_options+=( --exclude /vendor )
 fi
+if [ -n "$MOD_VAR_EXTRA_EXCLUDES" ]; then
+    IFS=',' read -ra EXTRA_EXCLUDES <<< "$MOD_VAR_EXTRA_EXCLUDES"
+    for item in "${EXTRA_EXCLUDES[@]}"; do
+        rsync_options+=( --exclude "$item" )
+    done
+fi
+
 rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 change_dir "deploy/_tmp" "Temporary directory not found." true
 

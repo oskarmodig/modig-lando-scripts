@@ -7,6 +7,7 @@
 # MOD_VAR_RUN_COMPOSER:  If set, composer is run before and after deploy.
 #                            If set to "clean", the vendor dir is first removed, and install is run with instead of update.
 #
+# MOD_VAR_EXTRA_EXCLUDES:   Can be set to a comma-separated string with additional excludes.
 # MOD_VAR_EXCLUDE_VENDOR:   If set, the vendor dir is not copied to the package.
 #
 # MOD_VAR_GIT_TAG_PREFIX:    Prefix for git tags. Added before package version. Defaults to "v", so tag would be "v1.0.0".
