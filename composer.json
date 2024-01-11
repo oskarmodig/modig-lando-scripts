@@ -10,5 +10,8 @@
       "homepage": "https://modigmedia.se"
     }
   ],
-  "bin": ["modig-lando-script.sh", "modig-linux-script.sh"]
+  "bin": [
+    "modig-lando-script.sh",
+    "modig-linux-script.sh"
+  ]
 }
