@@ -10,7 +10,6 @@ sed -i 's/\r$//' temp_env_paths.txt
 while IFS= read -r ENV_FILE; do
     FULL_PATH="$MOD_LOC_SCRIPT_CALLED_FROM/$ENV_FILE"
     TEMP_PATH="/tmp/temp_env_file.env"
-    echo_progress "$FULL_PATH"
 
     if [ -f "$FULL_PATH" ]; then
         # Copy to a temporary file
@@ -27,8 +26,7 @@ while IFS= read -r ENV_FILE; do
         # Clean up the temporary .env file
         rm "$TEMP_PATH"
     else
-        echo "Warning: .env file '$FULL_PATH' not found."
-        exit 1;
+        exit_script "Warning: .env file '$FULL_PATH' not found."
     fi
 done < temp_env_paths.txt
 

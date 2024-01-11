@@ -10,7 +10,7 @@ lando wp core install --url="$MOD_LOC_LANDO_APP_NAME".lndo.site --title="$MOD_LO
 lando wp config set WP_ENVIRONMENT_TYPE local --path=wordpress
 lando wp config set WP_DEBUG true --raw --path=wordpress
 lando wp config set WP_DEBUG_DISPLAY true --raw --path=wordpress
-lando wp config set WP_DEBUG_LOG '/app/wordpress/wp-content/debug.log' --raw
+lando wp config set WP_DEBUG_LOG '/app/wordpress/wp-content/debug.log' --raw --path=wordpress
 
 
 echo_progress "Installing WooCommerce"
