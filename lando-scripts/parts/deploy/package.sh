@@ -2,6 +2,8 @@
 
 change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
 
+exit_script "test"
+
 # Set up the temporary directory
 MOD_LOC_TEMP_DIR=$MOD_VAR_MAIN_WP_NAME
 
@@ -102,7 +104,10 @@ create_zip() {
 
     # Move the zip file to its destination
     create_dir "$move_dir"
-    mv "$(basename "$base_name")".zip "$move_dir"
+    base_name_zip="$(basename "$base_name").zip"
+    if ! mv "$base_name_zip" "$move_dir"; then
+        exit_script "Error: Failed to move '$base_name_zip' to '$move_dir'"
+    fi
 
     # Return to the original directory
     change_dir "$original_dir" "Original dir not found."

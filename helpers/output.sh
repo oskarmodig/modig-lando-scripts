@@ -24,10 +24,14 @@ echo_prompt() {
   if [[ -z "$2" ]]; then echo; fi
 }
 
-exit_script() {
-  echo
+echo_error() {
+  if [[ -z "$2" ]]; then echo; fi
   echo -e "${RED}ERROR:${NC} $1"
-  echo
+  if [[ -z "$2" ]]; then echo; fi
+}
+
+exit_script() {
+  echo_error "$1" "$2"
   exit 1;
 }
 

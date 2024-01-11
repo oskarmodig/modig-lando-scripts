@@ -39,6 +39,8 @@ handle_composer() {
   # Execute the composer commands
   if [ "$MOD_VAR_RUN_COMPOSER" = "clean" ]; then
     remove_dir vendor/
+    # Remove composer.lock to avoid conflicts
+    rm -f composer.lock
     # shellcheck disable=SC2086
     composer install $composer_params
   else

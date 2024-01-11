@@ -1,20 +1,6 @@
 #!/bin/bash
 
-# Get input arguments
-for ARGUMENT in "$@"
-do
-   KEY=$(echo "$ARGUMENT" | cut -f1 -d=)
-
-   KEY_LENGTH=${#KEY}
-   VALUE="${ARGUMENT:$KEY_LENGTH+1}"
-
-   export "$KEY"="$VALUE"
-done
-
-# Change value of $MOD_INP_ENV to uppercase
-MOD_INP_ENV=${MOD_INP_ENV^^}
-
-# Define the function with a parameter to determine the pattern
+# Process lando ENV file variables
 process_variables() {
     local include_test=$1
     local pattern_prefix="MOD_VAR__${MOD_INP_ENV}"

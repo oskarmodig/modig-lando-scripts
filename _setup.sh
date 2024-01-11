@@ -19,20 +19,21 @@
 #                   If this is set to 'true', the script will MOD_VAR__${MOD_INP_ENV}_TEST__* variables over MOD_VAR__${MOD_INP_ENV}__*.
 #                   E.g., for 'BOOK_PL', MOD_VAR__BOOK_PL__TEST__* variables are used.
 #                   However, if a MOD_VAR__${MOD_INP_ENV}_TEST__* variable is not set, the script will fall back to MOD_VAR__${MOD_INP_ENV}__*.
-
+#
+#
+#
 # MOD_VAR_*
 #
 # Variables set mainly in .env files
 # In the .env files they can also be set as MOD_VAR__[env]__*, to allow different environments in the same lando app
 # This requires the MOD_INP_ENV variable to be set to the same value as [env] in the .env file
 #
-# General variables, for all scripts:
+# General MOD_VARs:
 # - MOD_VAR_PACKAGE_NAME (semi-optional): The name of the package as seen by WordPress (plugin/theme folder name), defaults to Lando app name if available.
-# - MOD_VAR_PACKAGE_PATH (optional):      The path to the package files, defaults to /app.
 # - MOD_VAR_PACKAGE_TYPE (optional):      The type of package, defaults to 'plugin'.
-# - MOD_VAR_WP_PATH (optional):           The path to the WordPress files, defaults to 'wordpress'.
 #
 # More variables are documented in the individual script files.
+#
 #
 #
 #
@@ -46,50 +47,13 @@
 # Set by prompting user for input.
 # User should be prompted as soon as possible in the script, to avoid them having to wait for the script to run before being prompted.
 
-
-
-# Get directory of this script
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+# shellcheck disable=SC2034
+MOD_LOC_CURRENT_SCRIPT_DIR="$MOD_LOC_SCRIPTS_BASE_DIR/$MOD_LOC_SCRIPT_TYPE-scripts"
 
 # Load variables
-. "$DIR/helpers/load-variables.sh"
+. "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/load-input-variables.sh"
 
 # Load helpers
-. "$DIR/helpers/output.sh"
-. "$DIR/helpers/helpers.sh"
-
-# Set value for MOD_VAR_PACKAGE_TYPE if not provided
-MOD_VAR_PACKAGE_TYPE=${MOD_VAR_PACKAGE_TYPE:-"plugin"}
-
-# Change directory to the package path
-MOD_VAR_PACKAGE_PATH=${MOD_VAR_PACKAGE_PATH:-"/app"}
-
-# Determine the package name, either from the provided variable or from the LANDO_APP_NAME
-if [ -z "$MOD_VAR_PACKAGE_NAME" ]; then
-  check_required_vars "You have to supply a plugin/theme name in MOD_VAR_PACKAGE_NAME, not found from LANDO_APP_NAME." LANDO_APP_NAME
-  MOD_VAR_PACKAGE_NAME=$LANDO_APP_NAME
-fi
-
-# Set WordPress path if not provided
-MOD_VAR_WP_PATH=${MOD_VAR_WP_PATH:-"wordpress"}
-
-# Go to package path
-change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
-
-
-# SELECT SCRIPT TO RUN
-case $MOD_INP_SCRIPT in
-
-  deploy)
-    . "$DIR/deploy.sh"
-    ;;
-
-  make-pot)
-    . "$DIR/make-pot.sh"
-    ;;
-
-  *)
-    exit_script "You have entered an invalid script, please try again."
-    ;;
-esac
+. "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/output.sh"
+. "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/helpers.sh"
+. "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/execute-parts.sh"

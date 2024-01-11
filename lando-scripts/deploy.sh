@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Available arguments:
+# Available MOD_VARs:
 # MOD_VAR_MAIN_WP_NAME:  Name of the folder and zip file created for the main deploy package.
 # MOD_VAR_DLF_NAME:      Name of the zip file for DownloadsFlo
 # MOD_VAR_JSON:          Name of .json-file to include in downloadsflo-dir. Defaults to info (.json-extension is added automatically)
@@ -59,7 +59,7 @@ esac
 
 # If $MOD_READ_ACTION is g or a, and MOD_LOC_SKIP_GIT_TAG is not set to true, prompt for the git tag message
 if [[ "$MOD_READ_ACTION" =~ [ga] && "$MOD_LOC_SKIP_GIT_TAG" != true ]]; then
-    . "$DIR/parts/deploy/git-tag-prep.sh"
+    . "$MOD_LOC_CURRENT_SCRIPT_DIR/parts/deploy/git-tag-prep.sh"
 fi
 
 
@@ -67,32 +67,15 @@ fi
 echo_progress "Getting package version"
 
 MOD_LOC_PACKAGE_VER=$(wp "$MOD_VAR_PACKAGE_TYPE" list --path="$MOD_VAR_WP_PATH" --name="$MOD_VAR_PACKAGE_NAME" --field=version)
-check_required_vars "Version for package of typ $MOD_VAR_PACKAGE_TYPE version not found, name: $MOD_VAR_PACKAGE_NAME, WP Path: $MOD_VAR_WP_PATH." MOD_LOC_PACKAGE_VER
+# Check if the version was successfully retrieved
+if [ -z "$MOD_LOC_PACKAGE_VER" ]; then
+    # Prompt the user for the version number
+    echo "Failed to retrieve the version number automatically. Package name: $MOD_VAR_PACKAGE_NAME, WP Path: $MOD_VAR_WP_PATH."
+    read -r -p "Please enter the version number: " user_input
+    MOD_LOC_PACKAGE_VER=$user_input
+fi
 
 echo_progress "Package version: $MOD_LOC_PACKAGE_VER"
-
-
-
-
-execute_part() {
-  # Replace dashes with underscores part name, and make it uppercase
-  local part_name="$1"
-  part_name=${part_name//-/_}
-  part_name=${part_name^^}
-
-  local var_name="MOD_LOC_SKIP_$part_name"
-
-  # if variable MOD_LOC_SKIP_[PART_NAME] is set to true, skip the part
-  if [[ "${!var_name}" == true ]]; then
-    echo_progress "Skipping $1"
-    return
-  fi
-
-  if [ -f "$DIR/parts/deploy/$1.sh" ]; then
-    # shellcheck disable=SC1090
-    . "$DIR/parts/deploy/$1.sh"
-  fi
-}
 
 
 case $MOD_READ_ACTION in
