@@ -8,7 +8,6 @@ lando start
 
 # Build lando
 execute_part "install-wordpress"
-lando build
 
 # Create .htaccess file with contents
 execute_part "htaccess"
