@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Path to the .lando.yml file
-MOD_LOC_LANDO_FILE="$MOD_LOC_SCRIPT_CALLED_FROM/.lando.yml"
 
 # Check if the "excludes" section exists
 MOD_LOC_EXCLUDES_SECTION_EXISTS=$(grep -c "^excludes:" "$MOD_LOC_LANDO_FILE")
