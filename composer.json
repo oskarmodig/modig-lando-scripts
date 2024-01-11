@@ -1,5 +1,5 @@
 {
-  "name": "oskarmodig/modig-dev-scripts",
+  "name": "oskarmodig/lando-scripts",
   "description": "Helper scripts for setting up and deploying WordPress themes and plugins with lando",
   "minimum-stability": "stable",
   "license": "proprietary",
