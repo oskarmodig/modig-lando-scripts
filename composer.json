@@ -1,0 +1,14 @@
+{
+  "name": "oskarmodig/modig-lando-scripts",
+  "description": "Helper scripts for setting up and deploying WordPress themes and plugins with lando",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Oskar Modig",
+      "email": "oskar@modigmedia.se",
+      "homepage": "https://modigmedia.se"
+    }
+  ],
+  "bin": ["modig-lando-script.sh", "modig-linux-script.sh"]
+}
