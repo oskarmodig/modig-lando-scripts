@@ -16,7 +16,7 @@ execute_part "htaccess"
 touch "/$MOD_LOC_WORDPRESS_PATH/wp-content/debug.log"
 
 # Restore lando excludes
-execute_part "excludes-disable"
+execute_part "excludes-re-enable"
 
 # Rebuild lando
 lando rebuild -y
