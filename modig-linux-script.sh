@@ -21,7 +21,7 @@ MOD_LOC_SCRIPT_TYPE=linux
 
 # Get lando app name
 # shellcheck disable=SC2034
-MOD_LOC_LANDO_APP_NAME=$(grep 'name:' .lando.yml | awk '{print $2}')
+MOD_LOC_LANDO_APP_NAME=$(grep 'name:' .lando.yml | awk '{print $2}' | tr -d '\r\n')
 
 
 
