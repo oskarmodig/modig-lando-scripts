@@ -20,7 +20,7 @@ fi
 MOD_LOC_SCRIPT_TYPE=lando
 
 # Basic script setup
-. "$MOD_LOC_SCRIPTS_BASE_DIR/_setup.sh"
+. "$MOD_LOC_SCRIPTS_BASE_DIR/_setup-scripts.sh"
 
 . "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/load-lando-env-vars.sh"
 

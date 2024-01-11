@@ -14,7 +14,7 @@ fi
 MOD_LOC_SCRIPT_TYPE=linux
 
 # Basic script setup
-. "$MOD_LOC_SCRIPTS_BASE_DIR/_setup.sh"
+. "$MOD_LOC_SCRIPTS_BASE_DIR/_setup-scripts.sh"
 
 # Check if lando is installed
 . "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/lando-command-check.sh"
