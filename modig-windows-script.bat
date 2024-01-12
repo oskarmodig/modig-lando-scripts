@@ -6,9 +6,13 @@ echo Start Windows setup
 REM Prompt for the WSL Linux user
 set /p LINUX_USER="Enter your WSL Linux username: "
 
-REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash -c vendor/bin/modig-linux-script.sh %*
+set WSL_SCRIPT_PATH=vendor/bin/modig-linux-script.sh
 
+REM Check if the script is executable
+wsl test -x %WSL_SCRIPT_PATH% || wsl chmod +x %WSL_SCRIPT_PATH%
+
+REM Pass arguments from batch file to shell script in WSL
+wsl sudo -u %LINUX_USER% bash -c %WSL_SCRIPT_PATH% %*
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (
