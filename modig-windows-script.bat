@@ -1,5 +1,9 @@
 @echo off
 
+REM Dummy read to clear any residual input
+echo Start Windows setup
+set /P dummy="Press Enter to continue..."
+
 REM Prompt for the WSL Linux user
 set /p LINUX_USER="Enter your WSL Linux username: "
 
