@@ -15,7 +15,7 @@ call_wp config set WP_DEBUG true --raw
 call_wp config set WP_DEBUG_DISPLAY true --raw
 call_wp config set WP_DEBUG_LOG '/app/wordpress/wp-content/debug.log'
 
-call_wp update permalink_structure '/%postname%/'
+call_wp option update permalink_structure '/%postname%/'
 
 
 echo_progress "Installing WooCommerce"
