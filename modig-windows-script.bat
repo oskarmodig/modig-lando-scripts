@@ -2,13 +2,12 @@
 
 REM Dummy read to clear any residual input
 echo Start Windows setup
-set /P dummy="Press Enter to continue..."
 
 REM Prompt for the WSL Linux user
 set /p LINUX_USER="Enter your WSL Linux username: "
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash vendor/modig-scripts/modig-linux-script.sh %*
+wsl sudo -u %LINUX_USER% bash -c vendor/bin/modig-linux-script.sh %*
 
 
 REM Check for errors in the WSL command
