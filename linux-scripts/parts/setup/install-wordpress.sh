@@ -20,11 +20,11 @@ echo_progress "Installing Storefront"
 lando wp theme install storefront --activate --path=wordpress
 
 echo_progress "Setting timezone to Stockholm"
-wp option update timezone_string "Europe/Stockholm" --path=wordpress
+lando wp option update timezone_string "Europe/Stockholm" --path=wordpress
 
 echo_progress "Install and activate Swedish"
 lando wp language core install sv_SE --path=wordpress
-lando wp language core switch-language sv_SE --path=wordpress
+lando wp site switch-language sv_SE --path=wordpress
 
 echo_progress "Set up multisite"
 lando wp core multisite-install --title="$MOD_LOC_LANDO_APP_NAME DEV" --admin_user="admin" --admin_password="password" --admin_email="user@example.com" --path=wordpress
