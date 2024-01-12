@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the WordPress site is a multisite
-call_wp core is-installed --network
+call_wp_without_retry core is-installed --network
 exit_status=$?
 
 if [ $exit_status -eq 0 ]; then

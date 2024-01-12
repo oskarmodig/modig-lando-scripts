@@ -20,7 +20,7 @@ execute_part() {
         if execute_part_inner "$script_to_execute"; then
             break  # Exit the loop if script executes successfully
         else
-            read -r -p "Execution failed. Do you want to retry? (y/n): " retry_answer
+            read -r -p "Execution of $1 failed. Do you want to retry? (y/n): " retry_answer
             case $retry_answer in
                 [Yy]* ) continue;;  # Continue loop for retry
                 * ) exit_script "Aborted. Could not load $script_to_execute";;
