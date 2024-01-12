@@ -30,7 +30,7 @@ exit /b %errorlevel%
 :end_script
 
 REM Run lando rebuild in Windows
-lando rebuild
+lando rebuild -y
 
 REM Check for errors in the lando rebuild command
 if %errorlevel% neq 0 (

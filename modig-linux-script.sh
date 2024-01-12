@@ -19,6 +19,9 @@ MOD_LOC_SCRIPT_TYPE=linux
 # Check if lando is installed
 . "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/lando-command-check.sh"
 
+# WP CLI helper
+. "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/run-wp-command.sh"
+
 # Get lando app name
 # shellcheck disable=SC2034
 MOD_LOC_LANDO_APP_NAME=$(grep 'name:' .lando.yml | awk '{print $2}' | tr -d '\r\n')

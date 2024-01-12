@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Check if the WordPress site is a multisite
-if lando wp core is-installed --network; then
+call_wp core is-installed --network
+exit_status=$?
+
+if [ $exit_status -eq 0 ]; then
     # If it is a multisite, create .htaccess with multisite content
     # Replace this with either subdirectory or subdomain content as needed
     cat <<EOM > "$MOD_LOC_WORDPRESS_PATH/.htaccess"
