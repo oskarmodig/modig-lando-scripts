@@ -28,7 +28,6 @@ MOD_LOC_LANDO_APP_NAME=$(grep 'name:' .lando.yml | awk '{print $2}' | tr -d '\r\
 
 # Get path where script was called
 MOD_LOC_SCRIPT_CALLED_FROM=$(pwd)
-#exit_script "Called from $MOD_LOC_SCRIPT_CALLED_FROM"
 
 # Path to WordPress
 # shellcheck disable=SC2034
