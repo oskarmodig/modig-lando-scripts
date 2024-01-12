@@ -2,7 +2,10 @@
 
 echo_progress "Installing WordPress"
 
+# Remove any existing wordpress folder
 rm -rf wordpress && mkdir wordpress
+
+
 lando wp core download --path=wordpress
 lando wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --dbhost=database --path=wordpress --dbprefix=wp_
 lando wp core install --url="$MOD_LOC_LANDO_APP_NAME".lndo.site --title="$MOD_LOC_LANDO_APP_NAME DEV" --admin_user=admin --admin_password=password --admin_email=user@example.com --path=wordpress
