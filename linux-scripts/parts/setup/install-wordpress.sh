@@ -17,7 +17,6 @@ call_wp config set WP_DEBUG_LOG '/app/wordpress/wp-content/debug.log'
 
 call_wp option update permalink_structure '/%postname%/'
 
-
 echo_progress "Installing WooCommerce"
 call_wp plugin install woocommerce --activate
 

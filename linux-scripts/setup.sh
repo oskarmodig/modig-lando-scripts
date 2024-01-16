@@ -15,4 +15,4 @@ cd "$MOD_LOC_WORDPRESS_PATH"/wp-content/"$MOD_LOC_WP_CONTENT_SUB_FOLDER"/ && ln 
 touch "/$MOD_LOC_WORDPRESS_PATH/wp-content/debug.log"
 
 # Create .htaccess file with contents
-execute_part "create-htaccess"
+execute_part "create-htaccess" # TODO: This is not loading
