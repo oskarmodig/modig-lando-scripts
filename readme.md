@@ -20,3 +20,6 @@ REM .\vendor\bin\modig-windows-script.bat MOD_INP_ENV=your_plugin MOD_INP_SCRIPT
 ```
 
 You should the be able to run setup with `.\.lando-setup.bat`.
+
+### Unix
+You should be fine running `bash vendor/bin/modig-linux-script.sh MOD_INP_ENV=your_plugin MOD_INP_SCRIPT=setup` directly
