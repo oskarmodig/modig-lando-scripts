@@ -2,8 +2,6 @@
 
 change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
 
-exit_script "test"
-
 # Set up the temporary directory
 MOD_LOC_TEMP_DIR=$MOD_VAR_MAIN_WP_NAME
 
