@@ -3,7 +3,7 @@
 change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
 
 # Set up the temporary directory
-MOD_LOC_TEMP_DIR=$MOD_VAR_MAIN_WP_NAME
+MOD_LOC_TEMP_DIR=$MOD_VAR_PACKAGE_NAME
 
 if [ -n "$MOD_INP_TEST" ]; then
     MOD_LOC_TEMP_DIR="$MOD_LOC_TEMP_DIR-test"
@@ -67,9 +67,6 @@ change_dir "deploy/_tmp" "Temporary directory not found." true
 # Function to create a zip file
 create_zip() {
     local base_name="$1"       # Name of the zip file, and the source directory inside if include_dir is true
-    local destination_dir="$2" # Destination directory to move the zip file, inside deploy folder
-    local include_dir="$3"     # Whether to include the source directory in the zip file (or just the contents)
-    local copy_json="$4"       # Whether to copy the JSON file
 
     local source_dir="$MOD_LOC_TEMP_DIR"                     # Source directory to zip
     local json_destination_name="$MOD_VAR_JSON.json" # Name of the destination JSON file
@@ -85,20 +82,11 @@ create_zip() {
         source_dir="$base_name"
     fi
 
-    echo_progress "Creating file for $destination_dir"
+    echo_progress "Creating $base_name zip package"
 
-    # Save the current directory
-    local original_dir
-    original_dir=$(pwd)
+    zip -r "$(basename "$base_name")".zip "$source_dir"
 
-    if [ "$include_dir" = false ]; then
-        change_dir "$source_dir" "Source dir not found."
-        zip -r "$(basename "$base_name")".zip .
-    else
-        zip -r "$(basename "$base_name")".zip "$source_dir"
-    fi
-
-    move_dir="$MOD_LOC_DESTINATION_DIR/$destination_dir"
+    move_dir="$MOD_LOC_DESTINATION_DIR"
 
     # Move the zip file to its destination
     create_dir "$move_dir"
@@ -107,16 +95,15 @@ create_zip() {
         exit_script "Error: Failed to move '$base_name_zip' to '$move_dir'"
     fi
 
-    # Return to the original directory
-    change_dir "$original_dir" "Original dir not found."
-
-    if [ "$copy_json" = true ]; then
+    if [ -n "$MOD_VAR_JSON" ]; then
       # Handle JSON file if exists
-      MOD_VAR_JSON=${MOD_VAR_JSON:-"info"}
 
       json_file="$source_dir/$MOD_VAR_JSON.json"
       if [[ -f "$json_file" ]]; then
         cp "$json_file" "$move_dir/$json_destination_name"
+
+        # shellcheck disable=SC2034
+        MOD_LOC_SKIP_PUBLISH=false #Enables running publish script after this.
       else
         echo_notice "JSON file not found: $json_file"
       fi
@@ -129,16 +116,7 @@ create_zip() {
 }
 
 # Always create main zip file for WP
-create_zip "$MOD_VAR_MAIN_WP_NAME" "wp" true false
-
-# Maybe create zip files for downloadsflo,
-if [ -n "$MOD_VAR_DLF_NAME" ]; then
-    create_zip "$MOD_VAR_DLF_NAME" "downloadsflo" false true
-    # shellcheck disable=SC2034
-    MOD_LOC_SKIP_PUBLISH=false #Enables running publish script after this.
-else
-    echo_notice "Skip creating file for downloadsflo"
-fi
+create_zip "$MOD_VAR_PACKAGE_NAME"
 
 change_dir "deploy" "Temporary directory not found." true
 

@@ -29,8 +29,8 @@
 # This requires the MOD_INP_ENV variable to be set to the same value as [env] in the .env file
 #
 # General MOD_VARs:
-# - MOD_VAR_PACKAGE_NAME (semi-optional): The name of the package as seen by WordPress (plugin/theme folder name), defaults to Lando app name if available.
-# - MOD_VAR_PACKAGE_TYPE (optional):      The type of package, defaults to 'plugin'.
+# - MOD_VAR_PACKAGE_DEV_NAME (semi-optional): The name of the package as seen by WordPress (plugin/theme folder name), defaults to Lando app name if available.
+# - MOD_VAR_PACKAGE_TYPE (optional):          The type of package, defaults to 'plugin'.
 #
 # More variables are documented in the individual script files.
 #

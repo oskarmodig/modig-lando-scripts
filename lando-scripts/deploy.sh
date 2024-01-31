@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # Available MOD_VARs:
-# MOD_VAR_MAIN_WP_NAME:  Name of the folder and zip file created for the main deploy package.
-# MOD_VAR_DLF_NAME:      Name of the zip file for DownloadsFlo
-# MOD_VAR_JSON:          Name of .json-file to include in downloadsflo-dir. Defaults to info (.json-extension is added automatically)
+# MOD_VAR_PACKAGE_NAME:  Name of the folder and zip file created for the deploy package.
+# MOD_VAR_JSON:          Name of .json-file to include in package dir. ".json"-extension is added automatically
 # MOD_VAR_RUN_COMPOSER:  If set, composer is run before and after deploy.
 #                            If set to "clean", the vendor dir is first removed, and install is run with instead of update.
 #
@@ -66,11 +65,11 @@ fi
 # Retrieve the package version using WP-CLI
 echo_progress "Getting package version"
 
-MOD_LOC_PACKAGE_VER=$(wp "$MOD_VAR_PACKAGE_TYPE" list --path="$MOD_VAR_WP_PATH" --name="$MOD_VAR_PACKAGE_NAME" --field=version)
+MOD_LOC_PACKAGE_VER=$(wp "$MOD_VAR_PACKAGE_TYPE" list --path="$MOD_VAR_WP_PATH" --name="$MOD_VAR_PACKAGE_DEV_NAME" --field=version)
 # Check if the version was successfully retrieved
 if [ -z "$MOD_LOC_PACKAGE_VER" ]; then
     # Prompt the user for the version number
-    echo "Failed to retrieve the version number automatically. Package name: $MOD_VAR_PACKAGE_NAME, WP Path: $MOD_VAR_WP_PATH."
+    echo "Failed to retrieve the version number automatically. Package name: $MOD_VAR_PACKAGE_DEV_NAME, WP Path: $MOD_VAR_WP_PATH."
     read -r -p "Please enter the version number: " user_input
     MOD_LOC_PACKAGE_VER=$user_input
 fi

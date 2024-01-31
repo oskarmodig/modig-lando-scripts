@@ -11,6 +11,7 @@ options = "metadata,umask=22,fmask=11"
 ```
 
 Then, make sure you have a Linux user that is not `root`, it might need sudo permissions though.
+Also, make sure your Linux user is the owner of the project files.
 
 Add a file like this to your project root, for easy setup:
 ```bat
