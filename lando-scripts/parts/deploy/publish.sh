@@ -3,20 +3,20 @@
 # Script for deploying files to a remote server
 
 if [ -n "$MOD_INP_TEST" ]; then
-    MOD_LOC_DLF_DIR="$MOD_VAR_PACKAGE_PATH/deploy/test/v$MOD_LOC_PACKAGE_VER/downloadsflo"
+    MOD_LOC_PACKAGE_PATH="$MOD_VAR_PACKAGE_PATH/deploy/test/v$MOD_LOC_PACKAGE_VER"
 else
-    MOD_LOC_DLF_DIR="$MOD_VAR_PACKAGE_PATH/deploy/v$MOD_LOC_PACKAGE_VER/downloadsflo"
+    MOD_LOC_PACKAGE_PATH="$MOD_VAR_PACKAGE_PATH/deploy/v$MOD_LOC_PACKAGE_VER"
 fi
 
-change_dir "$MOD_LOC_DLF_DIR" "Publish DLF path not found."
+change_dir "$MOD_LOC_PACKAGE_PATH" "Publish source path not found."
 
-# Check for the MOD_VAR_DLF_NAME variable and set MOD_VAR_FILE_1 to its value if it is set
-if [ -n "$MOD_VAR_DLF_NAME" ]; then
+# Check for the MOD_VAR_JSON variable and set MOD_VAR_FILE_1 to its value if it is set
+if [ -n "$MOD_VAR_JSON" ]; then
   # Add -test to the file name if MOD_INP_TEST is set, prepping for publish.
     if [ -n "$MOD_INP_TEST" ]; then
-        MOD_VAR_DLF_NAME="$MOD_VAR_DLF_NAME-test"
+        MOD_VAR_JSON="$MOD_VAR_JSON-test"
     fi
-    MOD_VAR_FILE_1="$MOD_VAR_DLF_NAME"
+    MOD_VAR_FILE_1="$MOD_VAR_JSON"
 fi
 
 # Check for required variables
