@@ -2,7 +2,7 @@
 
 # Available MOD_VARs:
 # MOD_VAR_PACKAGE_NAME:  Name of the folder and zip file created for the deploy package.
-# MOD_VAR_JSON:          Name of .json-file to include in package dir. ".json"-extension is added automatically
+# MOD_VAR_PUBLISH:       Needs to be set for the publish script to run.
 # MOD_VAR_RUN_COMPOSER:  If set, composer is run before and after deploy.
 #                            If set to "clean", the vendor dir is first removed, and install is run with instead of update.
 #
@@ -11,12 +11,19 @@
 #
 # MOD_VAR_GIT_TAG_PREFIX:    Prefix for git tags. Added before package version. Defaults to "v", so tag would be "v1.0.0".
 
+if [ -z "$MOD_VAR_PACKAGE_NAME" ]; then
+    exit_script "You have to set MOD_VAR_PACKAGE_NAME"
+fi
 
 # shellcheck disable=SC2034
-MOD_LOC_SKIP_PUBLISH=true # Disables running publish by default, unless MOD_VAR_DLF_NAME is set. See parts/deploy/publish.sh
+MOD_LOC_SKIP_PUBLISH=true # Disables running publish by default, unless MOD_VAR_PUBLISH is set.
+
+if [ -n "$MOD_VAR_PUBLISH" ]; then
+    MOD_LOC_SKIP_PUBLISH=false # Enables running publish script.
+fi
 
 if [ -n "$MOD_INP_TEST" ]; then
-    MOD_LOC_SKIP_GIT_TAG=true # Disables running publish by default, unless MOD_VAR_DLF_NAME is set. See parts/deploy/publish.sh
+    MOD_LOC_SKIP_GIT_TAG=true # Disables running git tag if this is a test deploy.
 fi
 
 echo_progress "Start deploy"

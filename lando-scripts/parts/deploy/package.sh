@@ -69,11 +69,11 @@ create_zip() {
     local base_name="$1"       # Name of the zip file, and the source directory inside if include_dir is true
 
     local source_dir="$MOD_LOC_TEMP_DIR"                     # Source directory to zip
-    local json_destination_name="$MOD_VAR_JSON.json" # Name of the destination JSON file
+    local json_destination_name="$MOD_VAR_PACKAGE_NAME.json" # Name of the destination JSON file
 
     if [ -n "$MOD_INP_TEST" ]; then
         base_name="$base_name-test"
-        json_destination_name="$MOD_VAR_JSON-test.json"
+        json_destination_name="$MOD_VAR_PACKAGE_NAME-test.json"
     fi
 
     # Rename $MOD_LOC_TEMP_DIR if not already named as base_name
@@ -95,10 +95,10 @@ create_zip() {
         exit_script "Error: Failed to move '$base_name_zip' to '$move_dir'"
     fi
 
-    if [ -n "$MOD_VAR_JSON" ]; then
+    if [ -n "$MOD_VAR_PUBLISH" ]; then
       # Handle JSON file if exists
 
-      json_file="$source_dir/$MOD_VAR_JSON.json"
+      json_file="$source_dir/$MOD_VAR_PACKAGE_NAME.json"
       if [[ -f "$json_file" ]]; then
         cp "$json_file" "$move_dir/$json_destination_name"
 

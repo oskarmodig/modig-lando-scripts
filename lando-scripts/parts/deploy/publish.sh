@@ -10,13 +10,15 @@ fi
 
 change_dir "$MOD_LOC_PACKAGE_PATH" "Publish source path not found."
 
-# Check for the MOD_VAR_JSON variable and set MOD_VAR_FILE_1 to its value if it is set
-if [ -n "$MOD_VAR_JSON" ]; then
+# If MOD_VAR_FILE_1 is not set, default to MOD_VAR_PACKAGE_NAME
+if [ -z "$MOD_VAR_FILE_1" ]; then
+  MOD_LOC_PACKAGE_NAME=$MOD_VAR_PACKAGE_NAME
+
   # Add -test to the file name if MOD_INP_TEST is set, prepping for publish.
     if [ -n "$MOD_INP_TEST" ]; then
-        MOD_VAR_JSON="$MOD_VAR_JSON-test"
+        MOD_LOC_PACKAGE_NAME="$MOD_LOC_PACKAGE_NAME-test"
     fi
-    MOD_VAR_FILE_1="$MOD_VAR_JSON"
+    MOD_VAR_FILE_1="$MOD_LOC_PACKAGE_NAME"
 fi
 
 # Check for required variables
