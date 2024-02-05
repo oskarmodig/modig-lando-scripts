@@ -5,7 +5,7 @@ call_wp_without_retry() {
 }
 
 call_wp() {
-    echo_progress Running WP command: wp "$*"
+    echo_progress "Running WP command: wp $*"
     while true; do
         lando wp "$@" --path=wordpress
         local exit_status=$?
