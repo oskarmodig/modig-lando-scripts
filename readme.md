@@ -21,7 +21,7 @@ Add a file like this to your project root, for easy setup:
 You can also add the path to the vendor folder as the last argument, if you want to run the script from another folder.
 ```bat
 @echo off
-.\express-order\vendor\oskarmodig\lando-scripts\modig-windows-script.bat "MOD_INP_ENV=express_pl" "MOD_INP_SCRIPT=setup" "express-order\vendor"
+.\express-order\vendor\oskarmodig\lando-scripts\modig-windows-script.bat "MOD_INP_ENV=express_pl" "MOD_INP_SCRIPT=setup" "express-order/vendor"
 ```
 
 You should the be able to run setup with `.\.lando-setup.bat`.
