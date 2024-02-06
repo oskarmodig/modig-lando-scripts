@@ -66,6 +66,9 @@ NOTE that with Windows/WSL, `oskarmodig/lando-scripts` has to be installed both 
 ### lando app
 Here is a template for the '.lando.yml' file, which is the Lando configuration file for the project:
 ```yaml
+#
+# SETUP INSTRUCTIONS can be found at https://github.com/oskarmodig/modig-lando-scripts
+#
 name: app-name
 recipe: wordpress
 proxy:
