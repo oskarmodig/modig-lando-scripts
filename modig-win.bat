@@ -6,7 +6,7 @@ REM Prompt for the WSL Linux user
 set /p LINUX_USER="Enter your WSL Linux username: "
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash -c -i "modig-lin.sh %*"
+wsl sudo -u %LINUX_USER% bash -c -i "modig-lin.sh MOD_INP_SCRIPT=%1"
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (
