@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: This is currently not being used. It was intended to be used to load .env files from .lando.yml, but it's not being used anywhere.
+
 # Process .lando.yml to extract .env file paths and store them in a temporary file
 awk '/^env_file:/{flag=1;next}flag && /^  - /{sub(/^  - /, ""); print $0}flag && /^[a-zA-Z_]+:/{flag=0}' "$MOD_LOC_LANDO_FILE" > temp_env_paths.txt
 
