@@ -20,6 +20,8 @@ call_wp option update permalink_structure '/%postname%/'
 echo_progress "Installing WooCommerce"
 call_wp plugin install woocommerce --activate
 
+execute_part "setup-woocommerce"
+
 echo_progress "Installing Storefront"
 call_wp theme install storefront --activate
 
