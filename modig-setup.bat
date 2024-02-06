@@ -3,7 +3,7 @@
 echo Start Windows setup
 
 REM Call linux script "setup"
-call windows-scripts\run-linux-script.bat setup
+call "%~dp0windows-scripts\run-linux-script.bat" setup
 
 REM Run lando rebuild in Windows
 lando rebuild -y

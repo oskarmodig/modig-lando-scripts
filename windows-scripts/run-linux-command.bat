@@ -1,7 +1,7 @@
 @echo off
 
 if not defined LINUX_USER (
-    call get-linux-user.bat
+    call "%~dp0get-linux-user.bat"
 )
 
 REM Pass arguments from batch file to shell script in WSL
