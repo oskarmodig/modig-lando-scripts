@@ -11,8 +11,8 @@
     }
   ],
   "bin": [
-    "modig-lando-script.sh",
-    "modig-linux-script.sh",
-    "modig-windows-script.bat"
+    "modig-lan.sh",
+    "modig-lin.sh",
+    "modig-win.bat"
   ]
 }

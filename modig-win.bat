@@ -9,7 +9,7 @@ REM Set vendor dir to "vendor", if not passed to the script
 set "VENDOR_DIR=%~3"
 if "%VENDOR_DIR%" == "" set VENDOR_DIR=vendor
 
-set WSL_SCRIPT_PATH=%VENDOR_DIR%/oskarmodig/lando-scripts/modig-linux-script.sh
+set WSL_SCRIPT_PATH=%VENDOR_DIR%/oskarmodig/lando-scripts/modig-lin.sh
 
 REM Check if the script is executable
 wsl bash -c "chmod +x %WSL_SCRIPT_PATH%"
