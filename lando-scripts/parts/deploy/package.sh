@@ -29,6 +29,8 @@ fi
 
 # Define and execute rsync options to copy files to the temporary directory
 # The script excludes certain files and directories from being copied
+# NOTE, if something is added to this list, it should also be added to the list in the readme file.
+
 rsync_options=(
     -av
     --exclude="/.*"
