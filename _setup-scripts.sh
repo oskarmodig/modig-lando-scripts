@@ -8,7 +8,7 @@
 # E.g., 'plugin' or 'theme'? 'test' or not?
 #
 # Available options:
-# - MOD_INP_SCRIPT (required): The script to run (e.g., 'deploy' or 'make-pot'). See case below for available scripts.
+# - MOD_INP_SCRIPT (required): The script to run (e.g., 'deploy' or 'make-pot').
 #
 # - MOD_INP_ENV (required): The environment to get variables for (e.g., 'BOOK_PL' for Booking plugin).
 #                   MOD_VAR variables (described below) are set based on this value.

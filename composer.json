@@ -13,7 +13,6 @@
   "bin": [
     "modig-lan.sh",
     "modig-lin.sh",
-    "modig-setup.bat",
-    "modig-destroy.bat"
+    "modig-win.bat"
   ]
 }
