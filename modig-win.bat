@@ -15,7 +15,7 @@ REM Check if the script is executable
 REM wsl bash -c "chmod +x %WSL_SCRIPT_PATH%"
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash -c "modig-lin.sh %*"
+wsl sudo -u %LINUX_USER% bash -c -i "modig-lin.sh %*"
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (
