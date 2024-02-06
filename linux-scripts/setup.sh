@@ -52,3 +52,8 @@ RewriteRule . /index.php [L]
 # END WordPress
 EOM
 fi
+
+# Stop lando (since the port is most likely incorrect
+lando stop
+
+echo_progress "Lando setup complete! You can now start lando with 'lando start' and access your site at http://$MOD_LOC_LANDO_APP_NAME.lndo.site"
