@@ -4,10 +4,10 @@ if not defined LINUX_USER (
     call "%~dp0get-linux-user.bat"
 )
 
-echo Running linux command %2 in %1, as user %LINUX_USER%
+echo Running linux command %1
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash -c -i "%~1 %~2"
+wsl sudo -u %LINUX_USER% bash -c -i "%1"
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (
