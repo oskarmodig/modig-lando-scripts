@@ -6,16 +6,16 @@ REM Prompt for the WSL Linux user
 set /p LINUX_USER="Enter your WSL Linux username: "
 
 REM Set vendor dir to "vendor", if not passed to the script
-set "VENDOR_DIR=%~3"
-if "%VENDOR_DIR%" == "" set VENDOR_DIR=vendor
+REM set "VENDOR_DIR=%~3"
+REM if "%VENDOR_DIR%" == "" set VENDOR_DIR=vendor
 
-set WSL_SCRIPT_PATH=%VENDOR_DIR%/oskarmodig/lando-scripts/modig-lin.sh
+REM set WSL_SCRIPT_PATH=%VENDOR_DIR%/oskarmodig/lando-scripts/modig-lin.sh
 
 REM Check if the script is executable
-wsl bash -c "chmod +x %WSL_SCRIPT_PATH%"
+REM wsl bash -c "chmod +x %WSL_SCRIPT_PATH%"
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash -c "%WSL_SCRIPT_PATH% %*"
+wsl sudo -u %LINUX_USER% bash -c "modig-lin.sh %*"
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (
