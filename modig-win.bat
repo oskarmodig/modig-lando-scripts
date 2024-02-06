@@ -5,15 +5,6 @@ echo Start Windows setup
 REM Prompt for the WSL Linux user
 set /p LINUX_USER="Enter your WSL Linux username: "
 
-REM Set vendor dir to "vendor", if not passed to the script
-REM set "VENDOR_DIR=%~3"
-REM if "%VENDOR_DIR%" == "" set VENDOR_DIR=vendor
-
-REM set WSL_SCRIPT_PATH=%VENDOR_DIR%/oskarmodig/lando-scripts/modig-lin.sh
-
-REM Check if the script is executable
-REM wsl bash -c "chmod +x %WSL_SCRIPT_PATH%"
-
 REM Pass arguments from batch file to shell script in WSL
 wsl sudo -u %LINUX_USER% bash -c -i "modig-lin.sh %*"
 
