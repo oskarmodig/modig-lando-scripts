@@ -40,7 +40,6 @@ rsync_options=(
     --exclude "*.git*"
     --exclude "*.DS_Store*"
     --exclude /vendor
-    --exclude "composer.lock"
     --exclude "babel.config.json"
     --exclude "webpack.config.js"
     --exclude "package.json"
@@ -59,9 +58,14 @@ rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 change_dir "deploy/_tmp" "Temporary directory not found." true
 
 # Run composer operations if $MOD_VAR_SKIP_COMPOSER is not set, and composer.json exist.
-if [ -z "$MOD_VAR_SKIP_COMPOSER" ] && [ -f "composer.json" ]; then
-    composer install --no-dev --optimize-autoloader --no-lock
-    rm composer.json
+if [ -f "$MOD_LOC_TEMP_DIR/composer.json" ]; then
+  change_dir "$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
+  if [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
+      composer install --no-dev --optimize-autoloader
+  fi
+  rm composer.json
+  rm composer.lock
+  cd ..
 fi
 
 # Function to create a zip file

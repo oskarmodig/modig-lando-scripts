@@ -239,24 +239,23 @@ Here are the values available for the `.lando.public.env` file:
 ### Default list of excludes for deploy
 In addition to these default excludes, the [`MOD_VAR_EXTRA_EXCLUDES` environment variable](#deploy-environment-variables) can be set to a comma-separated string with additional excludes.
 
-| Exclude                  | Description                                                                                                 |
-|--------------------------|-------------------------------------------------------------------------------------------------------------|
-| `"/.*"`                  | All hidden files and folders                                                                                |
-| `"/*.env"`               | All environment files                                                                                       |
-| `/node_modules`          | Node modules                                                                                                |
-| `/wordpress`             | WordPress files                                                                                             |
-| `/testsuite`             | Test suite                                                                                                  |
-| `/tests`                 | Tests                                                                                                       |
-| `/bin`                   | Binaries                                                                                                    |
-| `/deploy`                | Deploy files                                                                                                |
-| `/customization-plugins` | Customization plugins                                                                                       |
-| `"*.gitlab-ci.yml*"`     | Gitlab CI files                                                                                             |
-| `"*.git*"`               | Git files                                                                                                   |
-| `"*.DS_Store*"`          | Mac OS files                                                                                                |
-| `/vendor`                | Composer vendor files (not that if `MOD_VAR_SKIP_COMPOSER` is not set, this will be generated on packaging) |
-| `"composer.lock"`        | Composer files                                                                                              |
-| `"babel.config.json"`    | Babel config                                                                                                |
-| `"webpack.config.js"`    | Webpack config                                                                                              |
-| `"package.json"`         | NPM package                                                                                                 |
-| `"package-lock.json"`    | NPM package                                                                                                 |
-| `"phpunit.xml.dist"`     | PHPUnit config                                                                                              |
+| Exclude                  | Description                                                                                                                                                                                               |
+|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `"/.*"`                  | All hidden files and folders                                                                                                                                                                              |
+| `"/*.env"`               | All environment files                                                                                                                                                                                     |
+| `/node_modules`          | Node modules                                                                                                                                                                                              |
+| `/wordpress`             | WordPress files                                                                                                                                                                                           |
+| `/testsuite`             | Test suite                                                                                                                                                                                                |
+| `/tests`                 | Tests                                                                                                                                                                                                     |
+| `/bin`                   | Binaries                                                                                                                                                                                                  |
+| `/deploy`                | Deploy files                                                                                                                                                                                              |
+| `/customization-plugins` | Customization plugins                                                                                                                                                                                     |
+| `"*.gitlab-ci.yml*"`     | Gitlab CI files                                                                                                                                                                                           |
+| `"*.git*"`               | Git files                                                                                                                                                                                                 |
+| `"*.DS_Store*"`          | Mac OS files                                                                                                                                                                                              |
+| `/vendor`                | Composer vendor files (not that if `MOD_VAR_SKIP_COMPOSER` is not set, this will be generated on packaging). Note that `composer.json` and `composer.lock` will be deleted before package zip is created. |
+| `"babel.config.json"`    | Babel config                                                                                                                                                                                              |
+| `"webpack.config.js"`    | Webpack config                                                                                                                                                                                            |
+| `"package.json"`         | NPM package                                                                                                                                                                                               |
+| `"package-lock.json"`    | NPM package                                                                                                                                                                                               |
+| `"phpunit.xml.dist"`     | PHPUnit config                                                                                                                                                                                            |
