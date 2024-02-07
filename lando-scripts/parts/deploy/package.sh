@@ -21,12 +21,6 @@ echo_progress "Preparing for deployment"
 remove_dir "$MOD_LOC_DESTINATION_DIR"
 create_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 
-# Run composer operations if specified
-if [ -n "$MOD_VAR_RUN_COMPOSER" ]; then
-    handle_composer
-    unset MOD_VAR_EXCLUDE_VENDOR
-fi
-
 # Define and execute rsync options to copy files to the temporary directory
 # The script excludes certain files and directories from being copied
 # NOTE, if something is added to this list, it should also be added to the list in the readme file.
@@ -45,7 +39,7 @@ rsync_options=(
     --exclude "*.gitlab-ci.yml*"
     --exclude "*.git*"
     --exclude "*.DS_Store*"
-    --exclude "composer.json"
+    --exclude /vendor
     --exclude "composer.lock"
     --exclude "babel.config.json"
     --exclude "webpack.config.js"
@@ -53,9 +47,7 @@ rsync_options=(
     --exclude "package-lock.json"
     --exclude "phpunit.xml.dist"
 )
-if [ -n "$MOD_VAR_EXCLUDE_VENDOR" ]; then
-    rsync_options+=( --exclude /vendor )
-fi
+
 if [ -n "$MOD_VAR_EXTRA_EXCLUDES" ]; then
     IFS=',' read -ra EXTRA_EXCLUDES <<< "$MOD_VAR_EXTRA_EXCLUDES"
     for item in "${EXTRA_EXCLUDES[@]}"; do
@@ -65,6 +57,12 @@ fi
 
 rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 change_dir "deploy/_tmp" "Temporary directory not found." true
+
+# Run composer operations if $MOD_VAR_SKIP_COMPOSER is not set, and composer.json exist.
+if [ -z "$MOD_VAR_SKIP_COMPOSER" ] && [ -f "composer.json" ]; then
+    composer install --no-dev --optimize-autoloader --no-lock
+    rm composer.json
+fi
 
 # Function to create a zip file
 create_zip() {
@@ -125,11 +123,6 @@ change_dir "deploy" "Temporary directory not found." true
 # Clean up by removing the temporary directory
 echo_progress "Removing TEMP DIR"
 remove_dir "_tmp"
-
-# Final composer handling if required
-if [ -n "$MOD_VAR_RUN_COMPOSER" ]; then
-    handle_composer true
-fi
 
 # Final message indicating the completion of the deployment process
 echo_progress "Deploy finished"

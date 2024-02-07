@@ -204,16 +204,14 @@ Here are the values available for the `.lando.public.env` file:
 
 #### Deploy environment variables
 
-| Variable               | Description                                                                                                                                                                                             | Default value       |
-|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| MOD_VAR_PACKAGE_PATH   | Absolute path to the package files, in the lando environment.                                                                                                                                           | `/app`              |
-| MOD_VAR_WP_PATH        | Relative path WordPress files, from the package path.                                                                                                                                                   | `wordpress`         |
-| MOD_VAR_PACKAGE_NAME   | Name of the folder and zip file created for the deploy package.                                                                                                                                         | Required for deploy |
-| MOD_VAR_PUBLISH        | Needs to be set for the publish script to run                                                                                                                                                           | unset               |
-| MOD_VAR_RUN_COMPOSER   | If set, composer is run before and after deploy. With `--no-dev --optimize-autoloader` before packaging. If set to "clean", the vendor dir is first removed, and install is run with instead of update. | unset               |
-| MOD_VAR_EXTRA_EXCLUDES | If set, composer is run before and after deploy. With `--no-dev --optimize-autoloader` before packaging. If set to "clean", the vendor dir is first removed, and install is run with instead of update. | unset               |
-| MOD_VAR_EXTRA_EXCLUDES | Can be set to a comma-separated string with additional excludes. Used by `rsync`. The [default list of excludes](#default-list-of-excludes-for-deploy) can be found below.                              | unset               |
-| MOD_VAR_EXCLUDE_VENDOR | If set, the vendor folder is excluded from the deploy package.                                                                                                                                          | unset               |
+| Variable               | Description                                                                                                                                                                | Default value       |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| MOD_VAR_PACKAGE_PATH   | Absolute path to the package files, in the lando environment.                                                                                                              | `/app`              |
+| MOD_VAR_WP_PATH        | Relative path WordPress files, from the package path.                                                                                                                      | `wordpress`         |
+| MOD_VAR_PACKAGE_NAME   | Name of the folder and zip file created for the deploy package.                                                                                                            | Required for deploy |
+| MOD_VAR_PUBLISH        | Needs to be set for the publish script to run                                                                                                                              | unset               |
+| MOD_VAR_SKIP_COMPOSER  | If set, composer is not run. If this is not set, and a `composer.json` file exists, composer is run with `--no-dev --optimize-autoloader` before packaging.                | unset               |
+| MOD_VAR_EXTRA_EXCLUDES | Can be set to a comma-separated string with additional excludes. Used by `rsync`. The [default list of excludes](#default-list-of-excludes-for-deploy) can be found below. | unset               |
 
 #### Publish environment variables
 | Variable              | Description                                                   | Default value                                                                                                                           |
@@ -241,24 +239,24 @@ Here are the values available for the `.lando.public.env` file:
 ### Default list of excludes for deploy
 In addition to these default excludes, the [`MOD_VAR_EXTRA_EXCLUDES` environment variable](#deploy-environment-variables) can be set to a comma-separated string with additional excludes.
 
-| Exclude                  | Description                  |
-|--------------------------|------------------------------|
-| `"/.*"`                  | All hidden files and folders |
-| `"/*.env"`               | All environment files        |
-| `/node_modules`          | Node modules                 |
-| `/wordpress`             | WordPress files              |
-| `/testsuite`             | Test suite                   |
-| `/tests`                 | Tests                        |
-| `/bin`                   | Binaries                     |
-| `/deploy`                | Deploy files                 |
-| `/customization-plugins` | Customization plugins        |
-| `"*.gitlab-ci.yml*"`     | Gitlab CI files              |
-| `"*.git*"`               | Git files                    |
-| `"*.DS_Store*"`          | Mac OS files                 |
-| `"composer.json"`        | Composer files               |
-| `"composer.lock"`        | Composer files               |
-| `"babel.config.json"`    | Babel config                 |
-| `"webpack.config.js"`    | Webpack config               |
-| `"package.json"`         | NPM package                  |
-| `"package-lock.json"`    | NPM package                  |
-| `"phpunit.xml.dist"`     | PHPUnit config               |
+| Exclude                  | Description                                                                                                 |
+|--------------------------|-------------------------------------------------------------------------------------------------------------|
+| `"/.*"`                  | All hidden files and folders                                                                                |
+| `"/*.env"`               | All environment files                                                                                       |
+| `/node_modules`          | Node modules                                                                                                |
+| `/wordpress`             | WordPress files                                                                                             |
+| `/testsuite`             | Test suite                                                                                                  |
+| `/tests`                 | Tests                                                                                                       |
+| `/bin`                   | Binaries                                                                                                    |
+| `/deploy`                | Deploy files                                                                                                |
+| `/customization-plugins` | Customization plugins                                                                                       |
+| `"*.gitlab-ci.yml*"`     | Gitlab CI files                                                                                             |
+| `"*.git*"`               | Git files                                                                                                   |
+| `"*.DS_Store*"`          | Mac OS files                                                                                                |
+| `/vendor`                | Composer vendor files (not that if `MOD_VAR_SKIP_COMPOSER` is not set, this will be generated on packaging) |
+| `"composer.lock"`        | Composer files                                                                                              |
+| `"babel.config.json"`    | Babel config                                                                                                |
+| `"webpack.config.js"`    | Webpack config                                                                                              |
+| `"package.json"`         | NPM package                                                                                                 |
+| `"package-lock.json"`    | NPM package                                                                                                 |
+| `"phpunit.xml.dist"`     | PHPUnit config                                                                                              |
