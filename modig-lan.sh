@@ -24,14 +24,14 @@ MOD_LOC_SCRIPT_TYPE=lando
 
 . "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/load-lando-env-vars.sh"
 
+# Determine the package name, either from the provided variable or from the LANDO_APP_NAME
+if [ -z "$MOD_VAR_PACKAGE_DEV_NAME" ]; then
+  check_required_vars "You have to supply a plugin/theme name in MOD_VAR_PACKAGE_DEV_NAME, not found from LANDO_APP_NAME." LANDO_APP_NAME
+  MOD_VAR_PACKAGE_DEV_NAME=$LANDO_APP_NAME
+fi
+
 . "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/parse-main-variables.sh"
 
-
-# Set package path if not provided
-MOD_VAR_PACKAGE_PATH=${MOD_VAR_PACKAGE_PATH:-"/app"}
-
-# Set WordPress path if not provided
-MOD_VAR_WP_PATH=${MOD_VAR_WP_PATH:-"wordpress"}
 
 # Go to package path
 change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."

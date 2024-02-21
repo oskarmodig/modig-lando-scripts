@@ -200,7 +200,6 @@ Here are the values available for the `.lando.public.env` file:
 
 | Variable                 | Description                                                              | Default value               |
 |--------------------------|--------------------------------------------------------------------------|-----------------------------|
-| MOD_VAR_PACKAGE_DEV_NAME | The name of the package as seen by WordPress (plugin/theme folder name). | Lando app name if available |
 | MOD_VAR_PACKAGE_TYPE     | The type of package, `plugin` or `theme`.                                | `plugin`                    |
 | MOD_VAR_PACKAGE_PATH     | Absolute path to the package files, in the lando environment.            | `/app`                      |
 | MOD_VAR_WP_PATH          | Relative path to WordPress files, from the package path.                 | `wordpress`                 |
@@ -208,12 +207,13 @@ Here are the values available for the `.lando.public.env` file:
 
 #### Deploy environment variables
 
-| Variable               | Description                                                                                                                                                                | Default value       |
-|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| MOD_VAR_PACKAGE_NAME   | Name of the folder and zip file created for the deploy package.                                                                                                            | Required for deploy |
-| MOD_VAR_PUBLISH        | Needs to be set for the publish script to run                                                                                                                              | unset               |
-| MOD_VAR_SKIP_COMPOSER  | If set, composer is not run. If this is not set, and a `composer.json` file exists, composer is run with `--no-dev --optimize-autoloader` before packaging.                | unset               |
-| MOD_VAR_EXTRA_EXCLUDES | Can be set to a comma-separated string with additional excludes. Used by `rsync`. The [default list of excludes](#default-list-of-excludes-for-deploy) can be found below. | unset               |
+| Variable                 | Description                                                                                                                                                                | Default value               |
+|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| MOD_VAR_PACKAGE_DEV_NAME | The name of the package as seen by WordPress (plugin/theme folder name).                                                                                                   | Lando app name if available |
+| MOD_VAR_PACKAGE_NAME     | Name of the folder and zip file created for the deploy package.                                                                                                            | Required for deploy         |
+| MOD_VAR_PUBLISH          | Needs to be set for the publish script to run                                                                                                                              | unset                       |
+| MOD_VAR_SKIP_COMPOSER    | If set, composer is not run. If this is not set, and a `composer.json` file exists, composer is run with `--no-dev --optimize-autoloader` before packaging.                | unset                       |
+| MOD_VAR_EXTRA_EXCLUDES   | Can be set to a comma-separated string with additional excludes. Used by `rsync`. The [default list of excludes](#default-list-of-excludes-for-deploy) can be found below. | unset                       |
 
 #### Publish environment variables
 | Variable              | Description                                                   | Default value                                                                                                                           |
