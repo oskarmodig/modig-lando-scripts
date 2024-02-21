@@ -11,8 +11,7 @@ create_htaccess() {
   if [ $exit_status -eq 0 ]; then
     # Commands for multisite .htaccess
     echo "Creating .htaccess for a multisite installation..."
-    lando ssh -c "cat > $htaccess_path << 'EOF'
-# BEGIN WordPress
+    echo "# BEGIN WordPress
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
@@ -24,13 +23,11 @@ RewriteRule ^ - [L]
 RewriteRule ^(wp-(content|admin|includes).*) \$1 [L]
 RewriteRule ^(.*\.php)$ \$1 [L]
 RewriteRule . index.php [L]
-# END WordPress
-EOF"
+# END WordPress" | lando ssh -c "cat > $htaccess_path"
   else
     # Commands for single site .htaccess
     echo "Creating .htaccess for a single-site installation..."
-    lando ssh -c "cat > $htaccess_path << 'EOF'
-# BEGIN WordPress
+    echo "# BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
@@ -39,8 +36,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
-# END WordPress
-EOF"
+# END WordPress" | lando ssh -c "cat > $htaccess_path"
   fi
 }
 

@@ -15,4 +15,4 @@ echo_progress "Creating symlink for package"
 lando mount
 
 # Create .htaccess file with contents
-execute_part "create-htaccess" # TODO: This is not loading
+execute_part "create-htaccess"
