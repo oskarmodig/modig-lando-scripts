@@ -1,6 +1,7 @@
 @echo off
 
 echo Start Windows setup
+call "%~dp0helpers\get-linux-user.bat"
 
 lando start
 

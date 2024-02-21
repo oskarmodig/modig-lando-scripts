@@ -1,8 +1,6 @@
 @echo off
 
-if not defined LINUX_USER (
-    call "%~dp0get-linux-user.bat"
-)
+call "%~dp0get-linux-user.bat"
 
 echo Running linux command %1, as user %LINUX_USER%
 
