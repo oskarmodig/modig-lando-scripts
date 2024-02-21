@@ -1,13 +1,18 @@
 #!/bin/bash
 
 call_wp_without_retry() {
-    lando wp "$@" --path=wordpress
+    local wordpress_path
+    wordpress_path="MOD_VAR_PACKAGE_PATH/MOD_VAR_WP_PATH"
+    lando wp "$@" --path="$wordpress_path"
 }
 
 call_wp() {
-    echo_progress "Running WP command: wp $*"
+    local wordpress_path
+    wordpress_path="MOD_VAR_PACKAGE_PATH/MOD_VAR_WP_PATH"
+
+    echo_progress "Running WP command: wp $* in $wordpress_path"
     while true; do
-        lando wp "$@" --path=wordpress
+        lando wp "$@" --path="$wordpress_path"
         local exit_status=$?
 
         if [[ $exit_status -eq 0 ]]; then

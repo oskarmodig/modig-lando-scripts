@@ -1,10 +1,15 @@
 #!/bin/bash
 
-# Start lando
-lando start
+# Start lando if this is not a Windows machine
+if [ "$MOD_LOC_SCRIPT_TYPE" != "windows" ]; then
+    echo_progress "Starting lando"
+    lando start
+fi
 
 # Build lando
 execute_part "install-wordpress"
+
+# TODO: Check if we should run composer install and/or npm install
 
 echo_progress "Creating symlink for package"
 lando mount
@@ -13,7 +18,7 @@ lando mount
 touch "/$MOD_LOC_WORDPRESS_PATH/wp-content/debug.log"
 
 # Create .htaccess file with contents
-# execute_part "create-htaccess" # TODO: This is not loading
+execute_part "create-htaccess" # TODO: This is not loading
 
 # Check if the WordPress site is a multisite
 call_wp_without_retry core is-installed --network

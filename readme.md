@@ -83,12 +83,10 @@ proxy:
 config:
   webroot: wordpress
   php: '8.2'
-excludes: # This is only needed for a WSL setup
-  - wordpress # Excludes the entire WordPress folder from the Docker file sync, which greatly improves performance
-  - '!wordpress/wp-config.php' # But not the wp-config.php file, or the below files
-  - '!wordpress/.htaccess'
-  - '!wordpress/wp-content/debug.log'
-  - node_modules # Remove this if not using Node.js
+excludes: # This is only needed for a WSL setup. Excludes folders from the Docker file sync, which greatly improves performance
+  - wordpress # Excludes the entire WordPress folder
+  - node_modules # You can remove this if not using Node.js
+  - vendor # You can remove this if not using Composer
 services:
   appserver:
     build:
@@ -111,6 +109,10 @@ environment:
 env_file: # Run 'lando rebuild' for changes here in these files to take effect
   - .lando.public.env
   - .lando.secret.env
+
+events:
+  post-start:
+    - appserver: composer global update # Updates the global composer packages when the container starts    
 
 tooling:
   composer:
@@ -196,18 +198,18 @@ Here are the values available for the `.lando.public.env` file:
 
 #### Global environment variables
 
-| Variable                 | Description                                                                                                                                                                                             | Default value               |
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| MOD_VAR_PACKAGE_DEV_NAME | The name of the package as seen by WordPress (plugin/theme folder name).                                                                                                                                | Lando app name if available |
-| MOD_VAR_PACKAGE_TYPE     | The type of package, `plugin` or `theme`.                                                                                                                                                               | `plugin`                    |
+| Variable                 | Description                                                              | Default value               |
+|--------------------------|--------------------------------------------------------------------------|-----------------------------|
+| MOD_VAR_PACKAGE_DEV_NAME | The name of the package as seen by WordPress (plugin/theme folder name). | Lando app name if available |
+| MOD_VAR_PACKAGE_TYPE     | The type of package, `plugin` or `theme`.                                | `plugin`                    |
+| MOD_VAR_PACKAGE_PATH     | Absolute path to the package files, in the lando environment.            | `/app`                      |
+| MOD_VAR_WP_PATH          | Relative path to WordPress files, from the package path.                 | `wordpress`                 |
 
 
 #### Deploy environment variables
 
 | Variable               | Description                                                                                                                                                                | Default value       |
 |------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| MOD_VAR_PACKAGE_PATH   | Absolute path to the package files, in the lando environment.                                                                                                              | `/app`              |
-| MOD_VAR_WP_PATH        | Relative path WordPress files, from the package path.                                                                                                                      | `wordpress`         |
 | MOD_VAR_PACKAGE_NAME   | Name of the folder and zip file created for the deploy package.                                                                                                            | Required for deploy |
 | MOD_VAR_PUBLISH        | Needs to be set for the publish script to run                                                                                                                              | unset               |
 | MOD_VAR_SKIP_COMPOSER  | If set, composer is not run. If this is not set, and a `composer.json` file exists, composer is run with `--no-dev --optimize-autoloader` before packaging.                | unset               |

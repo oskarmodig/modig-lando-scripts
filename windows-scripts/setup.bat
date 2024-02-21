@@ -2,11 +2,10 @@
 
 echo Start Windows setup
 
+lando start
+
 REM Call linux script "setup"
 call "%~dp0helpers\run-linux-script.bat" setup
-
-REM Run lando rebuild in Windows
-lando rebuild -y
 
 REM Check for errors in the lando rebuild command
 if %errorlevel% neq 0 (

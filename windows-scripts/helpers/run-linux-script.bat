@@ -7,7 +7,7 @@ if not defined LINUX_USER (
 echo Running linux command %1, as user %LINUX_USER%
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash -c -i "modig-lin.sh %1"
+wsl sudo -u %LINUX_USER% bash -c -i "modig-lin.sh %1 windows"
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (

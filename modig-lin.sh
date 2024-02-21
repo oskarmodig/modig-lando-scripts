@@ -11,7 +11,7 @@ if [ -z "$MOD_LOC_SCRIPTS_BASE_DIR" ]; then
 fi
 
 # shellcheck disable=SC2034
-MOD_LOC_SCRIPT_TYPE=linux
+MOD_LOC_SCRIPT_TYPE=${2:-"linux"}
 
 # Basic script setup
 . "$MOD_LOC_SCRIPTS_BASE_DIR/_setup-scripts.sh"
