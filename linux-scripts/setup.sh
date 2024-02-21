@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start lando if this is not a Windows machine
-if [ "$MOD_LOC_SCRIPT_TYPE" != "windows" ]; then
+if [ "$MOD_LOC_SCRIPT_ENVIRONMENT" != "windows" ]; then
     echo_progress "Starting lando"
     lando start
 fi
