@@ -3,8 +3,7 @@
 echo_progress "Installing WordPress"
 
 # Remove any existing wordpress folder
-rm -rf wordpress && mkdir wordpress
-
+lando ssh -c "rm -rf \"$MOD_LOC_ABSOLUT_WP_PATH\" && mkdir \"$MOD_LOC_ABSOLUT_WP_PATH\""
 
 call_wp core download
 call_wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --dbhost=database --dbprefix=wp_
@@ -13,7 +12,11 @@ call_wp core install --url="$MOD_LOC_LANDO_APP_NAME".lndo.site --title="$MOD_LOC
 call_wp config set WP_ENVIRONMENT_TYPE local
 call_wp config set WP_DEBUG true --raw
 call_wp config set WP_DEBUG_DISPLAY true --raw
-call_wp config set WP_DEBUG_LOG '/app/wordpress/wp-content/debug.log'
+
+# Set up debug log
+DEBUG_LOG_PATH="$MOD_LOC_ABSOLUT_WP_PATH/wp-content/debug.log"
+call_wp config set WP_DEBUG_LOG "\"$DEBUG_LOG_PATH\""
+lando ssh -c "touch \"$DEBUG_LOG_PATH\""
 
 call_wp option update permalink_structure '/%postname%/'
 

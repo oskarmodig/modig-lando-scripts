@@ -8,3 +8,5 @@ MOD_VAR_PACKAGE_PATH=${MOD_VAR_PACKAGE_PATH:-"/app"}
 
 # Set WordPress path if not provided
 MOD_VAR_WP_PATH=${MOD_VAR_WP_PATH:-"wordpress"}
+
+MOD_LOC_ABSOLUT_WP_PATH="$MOD_VAR_PACKAGE_PATH/$MOD_VAR_WP_PATH"
