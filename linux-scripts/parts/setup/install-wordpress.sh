@@ -15,7 +15,7 @@ call_wp config set WP_DEBUG_DISPLAY true --raw
 
 # Set up debug log
 DEBUG_LOG_PATH="$MOD_LOC_ABSOLUT_WP_PATH/wp-content/debug.log"
-call_wp config set WP_DEBUG_LOG "\"$DEBUG_LOG_PATH\""
+call_wp config set WP_DEBUG_LOG "$DEBUG_LOG_PATH"
 lando ssh -c "touch \"$DEBUG_LOG_PATH\""
 
 call_wp option update permalink_structure '/%postname%/'

@@ -44,7 +44,8 @@ They are run with the `modig-lan.sh` script, and the input variables are set wit
 - WordPress setup is run with `modig-lin.sh setup`
 - WordPress destruction is run with `modig-lin.sh destroy`
 ### Windows
-- WordPress setup is run with `modig-setup.bat`
+- WordPress setup is run with `modig-win.bat setup`
+  - You can also pass your linux username as the second argument, otherwise you will be prompted for it.
 - WordPress destruction is run with `modig-destroy.bat`
 
 ## Environment Setup
