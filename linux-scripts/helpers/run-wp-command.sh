@@ -2,13 +2,13 @@
 
 call_wp_without_retry() {
     local wordpress_path
-    wordpress_path="MOD_VAR_PACKAGE_PATH/MOD_VAR_WP_PATH"
+    wordpress_path="$MOD_VAR_PACKAGE_PATH/$MOD_VAR_WP_PATH"
     lando wp "$@" --path="$wordpress_path"
 }
 
 call_wp() {
     local wordpress_path
-    wordpress_path="MOD_VAR_PACKAGE_PATH/MOD_VAR_WP_PATH"
+    wordpress_path="$MOD_VAR_PACKAGE_PATH/$MOD_VAR_WP_PATH"
 
     echo_progress "Running WP command: wp $* in $wordpress_path"
     while true; do
