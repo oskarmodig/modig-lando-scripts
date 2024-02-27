@@ -24,7 +24,6 @@ create_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 # Define and execute rsync options to copy files to the temporary directory
 # The script excludes certain files and directories from being copied
 # NOTE, if something is added to this list, it should also be added to the list in the readme file.
-
 rsync_options=(
     -av
     --exclude="/.*"
@@ -42,8 +41,6 @@ rsync_options=(
     --exclude /vendor
     --exclude "babel.config.json"
     --exclude "webpack.config.js"
-    --exclude "package.json"
-    --exclude "package-lock.json"
     --exclude "phpunit.xml.dist"
 )
 
@@ -66,6 +63,24 @@ if [ -f "$MOD_LOC_TEMP_DIR/composer.json" ]; then
   rm composer.json
   rm composer.lock
   cd ..
+fi
+
+# Run npm operations if $MOD_VAR_SKIP_NPM is not set, and package.json exist.
+if [ -f "$MOD_LOC_TEMP_DIR/package.json" ]; then
+  change_dir "$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
+  if [ -z "$MOD_VAR_SKIP_NPM" ]; then
+      npm run build
+  fi
+  rm package.json
+  rm package-lock.json
+  cd ..
+fi
+
+if [ -n "$MOD_VAR_REMOVE_DIR_AFTER_BUILD" ]; then
+    IFS=',' read -ra REMOVE_DIR_AFTER_BUILD <<< "$MOD_VAR_REMOVE_DIR_AFTER_BUILD"
+    for item in "${REMOVE_DIR_AFTER_BUILD[@]}"; do
+        remove_dir "$MOD_LOC_TEMP_DIR/$item"
+    done
 fi
 
 # Function to create a zip file

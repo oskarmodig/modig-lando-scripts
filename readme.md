@@ -184,8 +184,9 @@ Your environment variables are stored in the `.lando.public.env` and `.lando.sec
 So a `.lando.secret.example.env` file is added to the repository, with the secret variables,
 and the `.lando.secret.env` file should be created locally with the actual secret variables.
 
-Since a lando app might contain multiple packages,
-all of the environment variables below can have an environment identifier in them, to separate the variables for different environments.
+Since a Lando app might contain multiple packages,
+all the environment variables below can have an environment identifier in them,
+to separate the variables for different environments.
 So for instance, `MOD_VAR_PACKAGE_NAME`
 can be set as both `MOD_VAR__ENV1__PACKAGE_NAME` and `MOD_VAR__ENV2__PACKAGE_NAME` in the same file.
 What variable is used is determined by the [`MOD_INP_ENV` input variable](#input-variables).
@@ -208,27 +209,29 @@ Here are the values available for the `.lando.public.env` file:
 
 #### Deploy environment variables
 
-| Variable                 | Description                                                                                                                                                                | Default value               |
-|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| MOD_VAR_PACKAGE_DEV_NAME | The name of the package as seen by WordPress (plugin/theme folder name).                                                                                                   | Lando app name if available |
-| MOD_VAR_PACKAGE_NAME     | Name of the folder and zip file created for the deploy package.                                                                                                            | Required for deploy         |
-| MOD_VAR_PUBLISH          | Needs to be set for the publish script to run                                                                                                                              | unset                       |
-| MOD_VAR_SKIP_COMPOSER    | If set, composer is not run. If this is not set, and a `composer.json` file exists, composer is run with `--no-dev --optimize-autoloader` before packaging.                | unset                       |
-| MOD_VAR_EXTRA_EXCLUDES   | Can be set to a comma-separated string with additional excludes. Used by `rsync`. The [default list of excludes](#default-list-of-excludes-for-deploy) can be found below. | unset                       |
+| Variable                       | Description                                                                                                                                                                | Default value               |
+|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| MOD_VAR_PACKAGE_DEV_NAME       | The name of the package as seen by WordPress (plugin/theme folder name).                                                                                                   | Lando app name if available |
+| MOD_VAR_PACKAGE_NAME           | Name of the folder and zip file created for the deploy package.                                                                                                            | Required for deploy         |
+| MOD_VAR_PUBLISH                | Needs to be set for the publish script to run                                                                                                                              | unset                       |
+| MOD_VAR_SKIP_COMPOSER          | If set, composer is not run. If this is not set, and a `composer.json` file exists, composer is run with `--no-dev --optimize-autoloader` before packaging.                | unset                       |
+| MOD_VAR_SKIP_NPM               | If set, npm is not run. If this is not set, and a `package.json` file exists, `npm run build` is run before packaging.                                                     | unset                       |
+| MOD_VAR_EXTRA_EXCLUDES         | Can be set to a comma-separated string with additional excludes. Used by `rsync`. The [default list of excludes](#default-list-of-excludes-for-deploy) can be found below. | unset                       |
+| MOD_VAR_REMOVE_DIR_AFTER_BUILD | Can be set to a comma-separated string of paths to folders to remove after composer/npm build process.                                                                     | unset                       |
 
 #### Publish environment variables
-| Variable              | Description                                                   | Default value                                                                                                                           |
-|-----------------------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| MOD_VAR_REMOTE_USER   | User on remote server used for login                          | `ubuntu`                                                                                                                                |
-| MOD_VAR_REMOTE_HOST   | IP or hostname of the remote server                           | unset                                                                                                                                   |
-| MOD_VAR_CERT_PATH     | Path to the certificate file used for login                   | `/lando/ssh`                                                                                                                            |
-| MOD_VAR_CERT_FILE     | Name of the certificate file used for login                   | `cert.pem`                                                                                                                              |
-| MOD_VAR_FILE_1        | Name of the file to be published                              | MOD_VAR_PACKAGE_NAME                                                                                                                    |
-| MOD_VAR_FILE_2        | Name of the file to be published                              | If MOD_VAR_FILE_1 has no extension, this is set to the same filename, but with the `.json` extension. FILE_1 will the default to `.zip` |
-| MOD_VAR_ARCHIVE_FILE  | Set this to also create an archive file of the package        | unset                                                                                                                                   |
-| $MOD_VAR_TARGET_USER  | User that will be set to owner of the file                    | unset                                                                                                                                   |
-| $MOD_VAR_TARGET_GROUP | User group that will be set to owner group of the file        | unset                                                                                                                                   |
-| $MOD_VAR_TARGET_DIR   | Absolute path on remote server where the files will be placed | unset                                                                                                                                   |
+| Variable             | Description                                                   | Default value                                                                                                                           |
+|----------------------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| MOD_VAR_REMOTE_USER  | User on remote server used for login                          | `ubuntu`                                                                                                                                |
+| MOD_VAR_REMOTE_HOST  | IP or hostname of the remote server                           | unset                                                                                                                                   |
+| MOD_VAR_CERT_PATH    | Path to the certificate file used for login                   | `/lando/ssh`                                                                                                                            |
+| MOD_VAR_CERT_FILE    | Name of the certificate file used for login                   | `cert.pem`                                                                                                                              |
+| MOD_VAR_FILE_1       | Name of the file to be published                              | MOD_VAR_PACKAGE_NAME                                                                                                                    |
+| MOD_VAR_FILE_2       | Name of the file to be published                              | If MOD_VAR_FILE_1 has no extension, this is set to the same filename, but with the `.json` extension. FILE_1 will the default to `.zip` |
+| MOD_VAR_ARCHIVE_FILE | Set this to also create an archive file of the package        | unset                                                                                                                                   |
+| MOD_VAR_TARGET_USER  | User that will be set to owner of the file                    | unset                                                                                                                                   |
+| MOD_VAR_TARGET_GROUP | User group that will be set to owner group of the file        | unset                                                                                                                                   |
+| MOD_VAR_TARGET_DIR   | Absolute path on remote server where the files will be placed | unset                                                                                                                                   |
 
 
 
@@ -242,23 +245,23 @@ Here are the values available for the `.lando.public.env` file:
 ### Default list of excludes for deploy
 In addition to these default excludes, the [`MOD_VAR_EXTRA_EXCLUDES` environment variable](#deploy-environment-variables) can be set to a comma-separated string with additional excludes.
 
-| Exclude                  | Description                                                                                                                                                                                               |
-|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `"/.*"`                  | All hidden files and folders                                                                                                                                                                              |
-| `"/*.env"`               | All environment files                                                                                                                                                                                     |
-| `/node_modules`          | Node modules                                                                                                                                                                                              |
-| `/wordpress`             | WordPress files                                                                                                                                                                                           |
-| `/testsuite`             | Test suite                                                                                                                                                                                                |
-| `/tests`                 | Tests                                                                                                                                                                                                     |
-| `/bin`                   | Binaries                                                                                                                                                                                                  |
-| `/deploy`                | Deploy files                                                                                                                                                                                              |
-| `/customization-plugins` | Customization plugins                                                                                                                                                                                     |
-| `"*.gitlab-ci.yml*"`     | Gitlab CI files                                                                                                                                                                                           |
-| `"*.git*"`               | Git files                                                                                                                                                                                                 |
-| `"*.DS_Store*"`          | Mac OS files                                                                                                                                                                                              |
-| `/vendor`                | Composer vendor files (not that if `MOD_VAR_SKIP_COMPOSER` is not set, this will be generated on packaging). Note that `composer.json` and `composer.lock` will be deleted before package zip is created. |
-| `"babel.config.json"`    | Babel config                                                                                                                                                                                              |
-| `"webpack.config.js"`    | Webpack config                                                                                                                                                                                            |
-| `"package.json"`         | NPM package                                                                                                                                                                                               |
-| `"package-lock.json"`    | NPM package                                                                                                                                                                                               |
-| `"phpunit.xml.dist"`     | PHPUnit config                                                                                                                                                                                            |
+| Exclude                  | Description                                                                                                                                                                                                     |
+|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `"/.*"`                  | All hidden files and folders                                                                                                                                                                                    |
+| `"/*.env"`               | All environment files                                                                                                                                                                                           |
+| `/node_modules`          | Node modules (note that if `MOD_VAR_SKIP_NPM` is not set, this will be generated on packaging). Also note that `package.json` and `package-lock.json` will be deleted before package zip is created.            |
+| `/wordpress`             | WordPress files                                                                                                                                                                                                 |
+| `/testsuite`             | Test suite                                                                                                                                                                                                      |
+| `/tests`                 | Tests                                                                                                                                                                                                           |
+| `/bin`                   | Binaries                                                                                                                                                                                                        |
+| `/deploy`                | Deploy files                                                                                                                                                                                                    |
+| `/customization-plugins` | Customization plugins                                                                                                                                                                                           |
+| `"*.gitlab-ci.yml*"`     | Gitlab CI files                                                                                                                                                                                                 |
+| `"*.git*"`               | Git files                                                                                                                                                                                                       |
+| `"*.DS_Store*"`          | Mac OS files                                                                                                                                                                                                    |
+| `/vendor`                | Composer vendor files (note that if `MOD_VAR_SKIP_COMPOSER` is not set, this will be generated on packaging). Also note that `composer.json` and `composer.lock` will be deleted before package zip is created. |
+| `"babel.config.json"`    | Babel config                                                                                                                                                                                                    |
+| `"webpack.config.js"`    | Webpack config                                                                                                                                                                                                  |
+| `"package.json"`         | NPM package                                                                                                                                                                                                     |
+| `"package-lock.json"`    | NPM package                                                                                                                                                                                                     |
+| `"phpunit.xml.dist"`     | PHPUnit config                                                                                                                                                                                                  |
