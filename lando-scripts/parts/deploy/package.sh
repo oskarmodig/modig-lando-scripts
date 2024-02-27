@@ -28,7 +28,6 @@ rsync_options=(
     -av
     --exclude="/.*"
     --exclude="/*.env"
-    --exclude /node_modules
     --exclude /wordpress
     --exclude /testsuite
     --exclude /tests
