@@ -39,7 +39,6 @@ rsync_options=(
     --exclude "*.git*"
     --exclude "*.DS_Store*"
     --exclude /vendor
-    --exclude "babel.config.json"
     --exclude "phpunit.xml.dist"
 )
 
@@ -76,6 +75,7 @@ rm composer.lock -f
 rm package.json -f
 rm package-lock.json -f
 rm webpack.config.js -f
+rm babel.config.json -f
 rm -rf node_modules
 
 cd ..
