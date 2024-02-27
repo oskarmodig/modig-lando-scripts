@@ -215,7 +215,7 @@ Here are the values available for the `.lando.public.env` file:
 | MOD_VAR_PACKAGE_NAME           | Name of the folder and zip file created for the deploy package.                                                                                                            | Required for deploy         |
 | MOD_VAR_PUBLISH                | Needs to be set for the publish script to run                                                                                                                              | unset                       |
 | MOD_VAR_SKIP_COMPOSER          | If set, composer is not run. If this is not set, and a `composer.json` file exists, composer is run with `--no-dev --optimize-autoloader` before packaging.                | unset                       |
-| MOD_VAR_SKIP_NPM               | If set, npm is not run. If this is not set, and a `package.json` file exists, `npm run build` is run before packaging.                                                     | unset                       |
+| MOD_VAR_SKIP_NPM               | If set, npm is not run. If this is not set, and a `package.json` file exists, `npm install && npm run build` is run before packaging.                                      | unset                       |
 | MOD_VAR_EXTRA_EXCLUDES         | Can be set to a comma-separated string with additional excludes. Used by `rsync`. The [default list of excludes](#default-list-of-excludes-for-deploy) can be found below. | unset                       |
 | MOD_VAR_REMOVE_DIR_AFTER_BUILD | Can be set to a comma-separated string of paths to folders to remove after composer/npm build process.                                                                     | unset                       |
 

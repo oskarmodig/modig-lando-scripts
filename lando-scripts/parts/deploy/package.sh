@@ -69,7 +69,7 @@ fi
 if [ -f "$MOD_LOC_TEMP_DIR/package.json" ]; then
   change_dir "$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
   if [ -z "$MOD_VAR_SKIP_NPM" ]; then
-      npm run build
+      npm install && npm run build
   fi
   rm package.json
   rm package-lock.json
