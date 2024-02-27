@@ -52,28 +52,17 @@ if [ -n "$MOD_VAR_EXTRA_EXCLUDES" ]; then
 fi
 
 rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
-change_dir "deploy/_tmp" "Temporary directory not found." true
+
+change_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
 
 # Run composer operations if $MOD_VAR_SKIP_COMPOSER is not set, and composer.json exist.
-if [ -f "$MOD_LOC_TEMP_DIR/composer.json" ]; then
-  change_dir "$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
-  if [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
-      composer install --no-dev --optimize-autoloader
-  fi
-  rm composer.json
-  rm composer.lock
-  cd ..
+if [ -f "$MOD_LOC_TEMP_DIR/composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
+    composer install --no-dev --optimize-autoloader
 fi
 
 # Run npm operations if $MOD_VAR_SKIP_NPM is not set, and package.json exist.
-if [ -f "$MOD_LOC_TEMP_DIR/package.json" ]; then
-  change_dir "$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
-  if [ -z "$MOD_VAR_SKIP_NPM" ]; then
-      npm install && npm run build
-  fi
-  rm package.json
-  rm package-lock.json
-  cd ..
+if [ -f "$MOD_LOC_TEMP_DIR/package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]; then
+    npm install && npm run build
 fi
 
 if [ -n "$MOD_VAR_REMOVE_DIR_AFTER_BUILD" ]; then
@@ -82,6 +71,14 @@ if [ -n "$MOD_VAR_REMOVE_DIR_AFTER_BUILD" ]; then
         remove_dir "$MOD_LOC_TEMP_DIR/$item"
     done
 fi
+
+rm composer.json
+rm composer.lock
+rm package.json
+rm package-lock.json
+rm webpack.config.js
+
+cd ..
 
 # Function to create a zip file
 create_zip() {
