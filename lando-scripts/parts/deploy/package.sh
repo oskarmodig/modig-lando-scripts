@@ -77,6 +77,7 @@ rm composer.lock
 rm package.json
 rm package-lock.json
 rm webpack.config.js
+rm -rf node_modules
 
 cd ..
 
