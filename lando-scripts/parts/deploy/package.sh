@@ -40,7 +40,6 @@ rsync_options=(
     --exclude "*.DS_Store*"
     --exclude /vendor
     --exclude "babel.config.json"
-    --exclude "webpack.config.js"
     --exclude "phpunit.xml.dist"
 )
 
@@ -56,27 +55,27 @@ rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
 change_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
 
 # Run composer operations if $MOD_VAR_SKIP_COMPOSER is not set, and composer.json exist.
-if [ -f "$MOD_LOC_TEMP_DIR/composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
+if [ -f "composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
     composer install --no-dev --optimize-autoloader
 fi
 
 # Run npm operations if $MOD_VAR_SKIP_NPM is not set, and package.json exist.
-if [ -f "$MOD_LOC_TEMP_DIR/package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]; then
+if [ -f "package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]; then
     npm install && npm run build
 fi
 
 if [ -n "$MOD_VAR_REMOVE_DIR_AFTER_BUILD" ]; then
     IFS=',' read -ra REMOVE_DIR_AFTER_BUILD <<< "$MOD_VAR_REMOVE_DIR_AFTER_BUILD"
     for item in "${REMOVE_DIR_AFTER_BUILD[@]}"; do
-        remove_dir "$MOD_LOC_TEMP_DIR/$item"
+        remove_dir "$item"
     done
 fi
 
-rm composer.json
-rm composer.lock
-rm package.json
-rm package-lock.json
-rm webpack.config.js
+rm composer.json -f
+rm composer.lock -f
+rm package.json -f
+rm package-lock.json -f
+rm webpack.config.js -f
 rm -rf node_modules
 
 cd ..
