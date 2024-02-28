@@ -14,7 +14,10 @@ fi
 # Push the tag to the remote repository
 repo_url="https://${MOD_VAR_GIT_USERNAME}:${MOD_READ_GIT_PASSWORD}@gitlab.com/${MOD_VAR_GIT_REPO}"
 
-if ! git push "$repo_url" --tags --atomic; then
+if ! git push "$repo_url"; then
+  exit_script "Failed to push the git repo"
+fi
+if ! git push "$repo_url" --tags; then
   exit_script "Failed to push the git tag"
 fi
 echo_progress "Git tag created and pushed to remote repository"
