@@ -36,7 +36,7 @@ call_wp language core install sv_SE
 call_wp site switch-language sv_SE
 
 echo_progress "Set up multisite"
-call_wp core multisite-install --title="$MOD_LOC_LANDO_APP_NAME DEV" --admin_user="admin" --admin_password="password" --admin_email="user@example.com"
+call_wp core multisite-install --subdomains --title="$MOD_LOC_LANDO_APP_NAME DEV" --admin_user="admin" --admin_password="password" --admin_email="user@example.com"
 
 echo_progress "Update translations"
 call_wp language plugin update --all
