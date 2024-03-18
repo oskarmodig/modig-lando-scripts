@@ -2,10 +2,10 @@
 
 call "%~dp0get-linux-user.bat"
 
-echo Running linux command %1, as user %LINUX_USER%
+echo Running linux command %1, as user %MODIG_LINUX_USER%
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %LINUX_USER% bash -c -i "modig-lin.sh %1 windows"
+wsl sudo -u %MODIG_LINUX_USER% bash -c -i "modig-lin.sh %1 windows"
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (

@@ -1,6 +1,8 @@
 @echo off
 
 echo Start Windows setup
+call "%~dp0helpers\read-env-files.bat" :readEnvFile .setup.modig.env
+call "%~dp0helpers\read-env-files.bat" :readEnvFile .setup.modig.secret.env
 call "%~dp0helpers\get-linux-user.bat"
 
 lando start

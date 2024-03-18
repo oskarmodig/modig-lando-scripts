@@ -1,5 +1,7 @@
-echo_progress "Setting up WooCommerce"
+echo_progress "Installing WooCommerce"
+call_wp plugin install woocommerce --activate
 
+echo_progress "Setting up WooCommerce"
 call_wp option update woocommerce_store_address "Kungsgatan 1"
 call_wp option update woocommerce_store_address_2 "Box 123"
 call_wp option update woocommerce_store_city "Stockholm"
