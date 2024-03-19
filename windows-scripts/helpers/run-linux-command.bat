@@ -1,11 +1,15 @@
 @echo off
 
-call "%~dp0get-linux-user.bat"
-
-echo Running linux command %1
 
 REM Pass arguments from batch file to shell script in WSL
-wsl sudo -u %MODIG_LINUX_USER% bash -c -i "%1"
+
+if not defined MODIG_SETUP_LINUX_USER (
+    echo Running linux command %1
+    wsl sudo bash -c -i "%1"
+) else (
+    echo Running linux command %1, as user %MODIG_SETUP_LINUX_USER%
+    wsl sudo -u %MODIG_SETUP_LINUX_USER% bash -c "%1"
+)
 
 REM Check for errors in the WSL command
 if %errorlevel% neq 0 (

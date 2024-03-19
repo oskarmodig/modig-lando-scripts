@@ -3,6 +3,10 @@
 echo Start Windows setup
 call "%~dp0helpers\read-env-files.bat" .setup.modig.env
 call "%~dp0helpers\read-env-files.bat" .setup.modig.secret.env
+
+@call "%temp%\modigLandoScriptEnvVars.bat"
+@del "%temp%\modigLandoScriptEnvVars.bat"
+
 call "%~dp0helpers\get-linux-user.bat"
 
 lando start

@@ -13,18 +13,18 @@ fi
 echo_progress "Current environment variables"
 env
 
-if [ -n "$MODIG_PLUGINS" ]; then
+if [ -n "$MODIG_SETUP_PLUGINS" ]; then
     declare -A special_plugins
     # shellcheck disable=SC2034
     special_plugins[woocommerce]="execute_part \"install-woocommerce\""
-    install_wp_items "plugin" "$MODIG_PLUGINS" special_plugins
+    install_wp_items "plugin" "$MODIG_SETUP_PLUGINS" special_plugins
 fi
 
-if [ -n "$MODIG_THEMES" ]; then
+if [ -n "$MODIG_SETUP_THEMES" ]; then
     declare -A special_themes
     # shellcheck disable=SC2034
     special_themes[storefront]="execute_part \"install-storefront\""
-    install_wp_items "theme" "$MODIG_THEMES" special_themes
+    install_wp_items "theme" "$MODIG_SETUP_THEMES" special_themes
 fi
 
 # Build lando
