@@ -55,12 +55,19 @@ change_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR" "Could not enter inner temporary dire
 
 # Run composer operations if $MOD_VAR_SKIP_COMPOSER is not set, and composer.json exist.
 if [ -f "composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
+    echo_progress "Running 'composer install --no-dev --optimize-autoloader'"
     composer install --no-dev --optimize-autoloader
 fi
 
 # Run npm operations if $MOD_VAR_SKIP_NPM is not set, and package.json exist.
 if [ -f "package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]; then
-    npm install && npm run build
+  #Check if a build script is defined in the package.json file
+  if [ -n "$(jq -r '.scripts.build' package.json)" ]; then
+    echo_progress "Running 'npm install'"
+    npm install
+    echo_progress "Running 'npm run build'"
+    npm run build
+  fi
 fi
 
 if [ -n "$MOD_VAR_REMOVE_DIR_AFTER_BUILD" ]; then
