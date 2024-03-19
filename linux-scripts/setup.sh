@@ -9,10 +9,6 @@ if [ "$MOD_LOC_SCRIPT_ENVIRONMENT" != "windows" ]; then
     lando start
 fi
 
-# Echo current env variables
-echo_progress "Current environment variables"
-env
-
 if [ -n "$MODIG_SETUP_PLUGINS" ]; then
     declare -A special_plugins
     # shellcheck disable=SC2034

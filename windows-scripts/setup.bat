@@ -16,7 +16,7 @@ call "%~dp0helpers\run-linux-script.bat" setup
 
 REM Check for errors in the lando rebuild command
 if %errorlevel% neq 0 (
-    echo Lando rebuild failed
+    echo Setup failed
     exit /b %errorlevel%
 )
 
