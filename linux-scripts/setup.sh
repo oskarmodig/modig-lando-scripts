@@ -26,6 +26,12 @@ if [ -n "$MODIG_SETUP_THEMES" ]; then
     install_wp_items "theme" "$MODIG_SETUP_THEMES" special_themes
 fi
 
+# If composer.json exists, run composer install
+if [ -f "composer.json" ]; then
+    echo_progress "Running composer install"
+    lando composer install
+fi
+
 if [ -n "$MODIG_SETUP_MULTISITE" ]; then
     execute_part "setup-multisite"
 fi
