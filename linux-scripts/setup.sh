@@ -9,6 +9,9 @@ if [ "$MOD_LOC_SCRIPT_ENVIRONMENT" != "windows" ]; then
     lando start
 fi
 
+# Build lando
+execute_part "install-wordpress"
+
 if [ -n "$MODIG_SETUP_PLUGINS" ]; then
     declare -A special_plugins
     # shellcheck disable=SC2034
@@ -22,9 +25,6 @@ if [ -n "$MODIG_SETUP_THEMES" ]; then
     special_themes[storefront]="execute_part \"install-storefront\""
     install_wp_items "theme" "$MODIG_SETUP_THEMES" special_themes
 fi
-
-# Build lando
-execute_part "install-wordpress"
 
 if [ -n "$MODIG_SETUP_MULTISITE" ]; then
     execute_part "setup-multisite"
