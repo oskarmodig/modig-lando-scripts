@@ -22,6 +22,9 @@ MOD_LOC_SCRIPT_TYPE=linux
 # Check if lando is installed
 . "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/lando-command-check.sh"
 
+# Load .env file
+. "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/load-env-file.sh"
+
 # WP CLI helper
 . "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/run-wp-command.sh"
 
