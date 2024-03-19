@@ -15,14 +15,14 @@ execute_part "install-wordpress"
 if [ -n "$MODIG_SETUP_PLUGINS" ]; then
     declare -A special_plugins
     # shellcheck disable=SC2034
-    special_plugins[woocommerce]="execute_part \"install-woocommerce\""
+    special_plugins[woocommerce]="install_woocommerce"
     install_wp_items "plugin" "$MODIG_SETUP_PLUGINS" special_plugins
 fi
 
 if [ -n "$MODIG_SETUP_THEMES" ]; then
     declare -A special_themes
     # shellcheck disable=SC2034
-    special_themes[storefront]="execute_part \"install-storefront\""
+    special_themes[storefront]="install_storefront"
     install_wp_items "theme" "$MODIG_SETUP_THEMES" special_themes
 fi
 

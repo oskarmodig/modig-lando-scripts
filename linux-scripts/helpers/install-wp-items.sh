@@ -24,3 +24,12 @@ install_wp_items() {
       fi
     done
 }
+
+install_woocommerce() {
+    execute_part "install-woocommerce"
+}
+
+install_storefront() {
+    echo_progress "Installing Storefront"
+    call_wp theme install storefront --activate
+}
