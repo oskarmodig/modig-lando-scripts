@@ -14,7 +14,7 @@ class Ngrok_Local {
 	private string $site_url;
 
 	public function __construct(){
-		$this->site_url = site_url() . '/';;
+		$this->site_url = site_url();
 
 		if (
 			! defined( 'WP_SITEURL' ) &&
@@ -46,9 +46,10 @@ class Ngrok_Local {
 			);
 			$response = wp_remote_retrieve_body( $request );
 
+			$parsed_ngrok_url = parse_url( $_SERVER['HTTP_REFERER'] );
 			echo str_replace(
 				$this->site_url,
-				wp_make_link_relative( $this->site_url ),
+				$parsed_ngrok_url['scheme'] . '://' . $parsed_ngrok_url['host'],
 				$response
 			);
 			exit;
