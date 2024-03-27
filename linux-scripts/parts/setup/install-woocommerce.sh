@@ -1,10 +1,12 @@
+echo_progress "Installing WooCommerce"
+call_wp plugin install woocommerce --activate
+
 echo_progress "Setting up WooCommerce"
 
-
-call_wp option patch insert woocommerce_onboarding_profile skipped 1
+call_wp option patch insert woocommerce_onboarding_profile skipped 1 # TODO: Not working
 call_wp option update woocommerce_show_marketplace_suggestions 'no'
 call_wp option update woocommerce_allow_tracking 'no'
-call_wp option update woocommerce_task_list_hidden 'yes'
+call_wp option update woocommerce_task_list_hidden 'yes' # TODO: Not working
 call_wp option update woocommerce_task_list_complete 'yes'
 call_wp option update woocommerce_task_list_welcome_modal_dismissed 'yes'
 

@@ -19,10 +19,10 @@ MOD_LOC_SCRIPT_TYPE=linux
 # Basic script setup
 . "$MOD_LOC_SCRIPTS_BASE_DIR/_setup-scripts.sh"
 
-# Check if lando is installed
+# Load helpers
+. "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/install-wp-items.sh"
 . "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/lando-command-check.sh"
-
-# WP CLI helper
+. "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/load-env-file.sh"
 . "$MOD_LOC_CURRENT_SCRIPT_DIR/helpers/run-wp-command.sh"
 
 # Get lando app name
