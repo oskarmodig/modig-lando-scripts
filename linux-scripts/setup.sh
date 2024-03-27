@@ -46,3 +46,6 @@ lando mount
 
 # Create .htaccess file with contents
 execute_part "create-htaccess"
+
+# Echo the site URL
+lando info --format json | jq '.[0].urls[-1]' | tr '"' ' '

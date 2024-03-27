@@ -1,13 +1,11 @@
 @echo off
 
-echo Start Windows setup
+echo "Start Windows script %MODIG_WIN_SCRIPT%"
 
 call "%~dp0helpers\load-env.bat"
 
-lando start
-
 REM Call linux script "setup"
-call "%~dp0helpers\run-linux-script.bat" setup
+call "%~dp0helpers\run-linux-script.bat" MODIG_WIN_SCRIPT
 
 REM Check for errors in the lando rebuild command
 if %errorlevel% neq 0 (
@@ -15,4 +13,4 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-echo Script completed successfully. If lando started on a custom port, try running "lando rebuild".
+echo Script completed successfully.

@@ -2,6 +2,7 @@
 ## Pre-requisites
 - PHP 8.2 (or later)
 - [Composer](https://getcomposer.org/download/)
+- jq (install with `sudo apt install jq`)
 ### Windows
 You need WSL 2 running, the correct distro as default
 (check with `wsl --list --verbose` and `wsl --set-default Ubuntu`, for instance).
@@ -45,8 +46,9 @@ They are run with the `modig-lan.sh` script, and the input variables are set wit
 - WordPress destruction is run with `modig-lin.sh destroy`
 ### Windows
 - WordPress setup is run with `modig-win.bat setup`
-  - You can also pass your linux username as the second argument, otherwise you will be prompted for it.
-- WordPress destruction is run with `modig-destroy.bat`
+- WordPress destruction is run with `modig-win.bat destroy`
+
+For all the commands above, you can also pass your linux username as the second argument, if it is not the default user in WSL.
 
 ## Environment Setup
 This is a guide for setting up the local development environment for the first time, not per project.

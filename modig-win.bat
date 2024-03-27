@@ -13,5 +13,6 @@ REM Check if the batch file exists
 if exist "%windowsScriptPath%" (
     call "%windowsScriptPath%"
 ) else (
-    echo Error: The batch file "%windowsScriptPath%" does not exist.
+    set "MODIG_WIN_SCRIPT=%1"
+    call "%~dp0windows-scripts\default.bat"
 )

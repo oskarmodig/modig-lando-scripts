@@ -1,8 +1,5 @@
 @echo off
 
-call "%~dp0get-linux-user.bat"
-
-
 REM Pass arguments from batch file to shell script in WSL
 if not defined MODIG_SETUP_LINUX_USER (
     echo Running linux command %1
