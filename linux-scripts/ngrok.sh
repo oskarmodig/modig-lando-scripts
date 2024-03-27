@@ -48,4 +48,5 @@ SITE_NAME=${SITE_NAME::-1}
 #
 # Call ngrok
 #
+echo "Staring ngrok for $SITE_NAME with name $FULL_SITE_NAME"
 ngrok http --host-header="$SITE_NAME" "$FULL_SITE_NAME"
