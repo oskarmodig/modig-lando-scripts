@@ -26,3 +26,12 @@ call_wp option update timezone_string "Europe/Stockholm"
 echo_progress "Install and activate Swedish"
 call_wp language core install sv_SE
 call_wp site switch-language sv_SE
+
+
+# Setup plugin for ngrok
+echo_progress "Installing WP-Ngrok-Local"
+
+lando ssh -c "mkdir -p \"$MOD_LOC_ABSOLUT_WP_PATH/wp-content/mu-plugins\""
+fileContent=$(cat "$MOD_LOC_CURRENT_SCRIPT_DIR"/vendor/wp-ngrok-local/ngrok-local.php)
+
+echo "$fileContent" | lando ssh -c "cat > \"$MOD_LOC_ABSOLUT_WP_PATH/wp-content/mu-plugins/wp-ngrok-local.php\""
