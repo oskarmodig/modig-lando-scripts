@@ -2,8 +2,6 @@
 
 echo "Start Windows script %MODIG_WIN_SCRIPT%"
 
-call "%~dp0helpers\load-env.bat"
-
 REM Call linux script "setup"
 call "%~dp0helpers\run-linux-script.bat" %MODIG_WIN_SCRIPT%
 

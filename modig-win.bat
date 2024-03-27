@@ -2,6 +2,8 @@
 
 echo Start Windows script
 
+call "%~dp0windows-scripts\helpers\load-env.bat"
+
 set "windowsScriptPath=%~dp0windows-scripts\%1.bat"
 
 REM If paramter 2 is set, use it as the WSL Linux user

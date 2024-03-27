@@ -2,8 +2,6 @@
 
 echo Start Windows setup
 
-call "%~dp0helpers\load-env.bat"
-
 lando start
 
 REM Call linux script "setup"
