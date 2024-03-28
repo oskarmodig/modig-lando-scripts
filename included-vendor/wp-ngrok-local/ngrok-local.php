@@ -13,7 +13,7 @@ class Ngrok_Local {
 
 	private string $site_url;
 
-	public function __construct(){
+	public function __construct() {
 		$this->site_url = site_url();
 
 		if (
@@ -27,13 +27,18 @@ class Ngrok_Local {
 			define( 'WP_HOME', $protocol . $_SERVER['HTTP_HOST'] );
 		} else {
 			// Bail if those constants are already defined.
-			return false;
+			return;
 		}
 
 		add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 	}
 
-	public function template_redirect() {
+	/**
+	 * Get the content of the page and replace the site url with the ngrok url.
+	 *
+	 * @return void
+	 */
+	public function template_redirect(): void {
 		if ( ! isset( $_GET['wp_ngrok_autoload'] ) ) {
 			$protocol = is_ssl() ? 'https://' : 'http://';
 
@@ -46,10 +51,18 @@ class Ngrok_Local {
 			);
 			$response = wp_remote_retrieve_body( $request );
 
-			$parsed_ngrok_url = parse_url( $_SERVER['HTTP_REFERER'] );
+			if ( defined( 'WP_LOCAL_NGROK_URL' ) ) {
+				$ngrok_url = WP_LOCAL_NGROK_URL;
+			} elseif ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
+				$parsed_ngrok_url = parse_url( $_SERVER['HTTP_REFERER'] );
+				$ngrok_url = $parsed_ngrok_url['scheme'] . '://' . $parsed_ngrok_url['host'];
+			} else {
+				$ngrok_url = wp_make_link_relative( $this->site_url );
+			}
+
 			echo str_replace(
 				$this->site_url,
-				$parsed_ngrok_url['scheme'] . '://' . $parsed_ngrok_url['host'],
+				$ngrok_url,
 				$response
 			);
 			exit;
