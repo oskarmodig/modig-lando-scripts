@@ -50,9 +50,6 @@
 # shellcheck disable=SC2034
 MOD_LOC_CURRENT_SCRIPT_DIR="$MOD_LOC_SCRIPTS_BASE_DIR/$MOD_LOC_SCRIPT_TYPE-scripts"
 
-# Load variables
-. "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/load-input-variables.sh"
-
 # Load helpers
 . "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/output.sh"
 . "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/helpers.sh"

@@ -19,6 +19,9 @@ fi
 # shellcheck disable=SC2034
 MOD_LOC_SCRIPT_TYPE=lando
 
+# Load variables
+. "$MOD_LOC_SCRIPTS_BASE_DIR/lando-scripts/helpers/load-input-variables.sh"
+
 # Basic script setup
 . "$MOD_LOC_SCRIPTS_BASE_DIR/_setup-scripts.sh"
 
