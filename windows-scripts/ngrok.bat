@@ -48,8 +48,27 @@ SET MODIG_NGROK_URL=%MODIG_NGROK_URL:~0,-1%
 
 echo Starting ngrok for %MODIG_NGROK_URL% with name %MODIG_NGROK_FULL_URL%
 
+REM Define initial flag variable
+SET "FLAGS=--host-header=%MODIG_NGROK_URL%"
+
+if defined MODIG_NGROK_DOMAIN (
+    REM Add new flag to FLAGS variable
+    SET "FLAGS=%FLAGS% --domain=%MODIG_NGROK_DOMAIN%"
+)
+
+if defined MODIG_NGROK_OATH_GOOGLE (
+    REM Add new flag to FLAGS variable
+    SET "FLAGS=%FLAGS% --oauth=google"
+) else (
+    if defined MODIG_NGROK_OATH_GOOGLE_DOMAIN (
+        REM Add new flag to FLAGS variable
+        SET "FLAGS=%FLAGS% --oauth=google"
+        SET "FLAGS=%FLAGS% --oauth-allow-domain=%MODIG_NGROK_OATH_GOOGLE_DOMAIN%"
+    )
+)
+
 :: start ngrok in the background
-start /b ngrok http --host-header="%MODIG_NGROK_URL%" "%MODIG_NGROK_FULL_URL%"
+start /b ngrok http %FLAGS% "%MODIG_NGROK_FULL_URL%"
 
 :: Pause for 2 seconds to give ngrok time to start
 timeout /t 2 >null
