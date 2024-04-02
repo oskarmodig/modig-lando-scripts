@@ -70,14 +70,14 @@ if defined MODIG_NGROK_OAUTH_GOOGLE (
 start /b ngrok http %FLAGS% "%MODIG_NGROK_FULL_URL%"
 
 :: Pause for 2 seconds to give ngrok time to start
-timeout /t 2 >null
+timeout /t 2
 
 if defined MODIG_NGROK_DOMAIN (
     REM Add new flag to FLAGS variable
     SET NGROK_URL="%PROTOCOL%://%MODIG_NGROK_DOMAIN%"
 ) else (
     :: Query the ngrok API for the tunnel information and parse it to get the public URL
-    for /f "delims=" %%i in ('powershell -File "helpers/get-ngrok-url.ps1" -url "%MODIG_NGROK_FULL_URL%"') do set "NGROK_URL=%%i"
+    for /f "delims=" %%i in ('powershell -File "%~dp0helpers\get-ngrok-url.ps1" -url "%MODIG_NGROK_FULL_URL%"') do set "NGROK_URL=%%i"
 )
 
 call "%~dp0helpers\run-linux-script.bat" ngrok-config "%NGROK_URL%"
