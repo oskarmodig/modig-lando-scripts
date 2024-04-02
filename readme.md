@@ -16,22 +16,11 @@ options = "metadata,umask=22,fmask=11"
 Then, make sure you have a Linux user that is not `root`, it might need sudo permissions though.
 Also, make sure your Linux user is the owner of the project files.
 
-Add a file like this to your project root, for easy setup:
-```bat
-@echo off
-.\vendor\bin\modig-win.bat "MOD_INP_ENV=express_pl" "MOD_INP_SCRIPT=setup"
-```
-You can also add the path to the vendor folder as the last argument, if you want to run the script from another folder.
-```bat
-@echo off
-.\app-name\vendor\oskarmodig\lando-scripts\modig-win.bat "MOD_INP_ENV=express_pl" "MOD_INP_SCRIPT=setup" "app-name/vendor"
-```
-
-You should the be able to run setup with `.\.lando-setup.bat`.
+You should the be able to run setup with `modlan setup`.
 ## Usage
 ### Lando scripts
 These are scripts that are run in the Lando container. You can set them up in the `.lando.yml` file, and run them with `lando <script-name>`.
-They are run with the `modig-lan.sh` script, and the input variables are set with the `MOD_INP_ENV` and `MOD_INP_SCRIPT` variables.
+They are run with the `modig-lando.sh` script, and the input variables are set with the `MOD_INP_ENV` and `MOD_INP_SCRIPT` variables.
 - `deploy` - Deploys the package to the server
 - `make-pot` - Creates a .pot file for translations
 
@@ -39,16 +28,16 @@ They are run with the `modig-lan.sh` script, and the input variables are set wit
 ```yaml
   deploy:
       cmd:
-        - appserver: modig-lan.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=deploy
+        - appserver: modig-lando.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=deploy
 ```
 ### Unix
 - WordPress setup is run with `modlan.sh setup`
 - WordPress destruction is run with `modlan.sh destroy`
 ### Windows
-- WordPress setup is run with `modlan.bat setup`
-- WordPress destruction is run with `modlan.bat destroy`
-- Starting ngrok is run with `modlan.bat ngrok`
-- Stopping ngrok is run with `modlan.bat ngrok-kill`
+- WordPress setup is run with `modlan setup`
+- WordPress destruction is run with `modlan destroy`
+- Starting ngrok is run with `modlan ngrok`
+- Stopping ngrok is run with `modlan ngrok-kill`
 
 For all the commands above, you can also pass your linux username as the second argument, if it is not the default user in WSL.
 
@@ -139,15 +128,15 @@ tooling:
 
   deploy:
       cmd:
-        - appserver: modig-lan.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=deploy # Runs the deploy script
+        - appserver: modig-lando.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=deploy # Runs the deploy script
 
   deploy-test:
       cmd:
-        - appserver: modig-lan.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=deploy MOD_INP_TEST=true # Runs the deploy script with the test flag
+        - appserver: modig-lando.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=deploy MOD_INP_TEST=true # Runs the deploy script with the test flag
 
   make-pot:
     cmd:
-      - appserver: modig-lan.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=make-pot # Creates a .pot file for translations
+      - appserver: modig-lando.sh MOD_INP_ENV=app_env MOD_INP_SCRIPT=make-pot # Creates a .pot file for translations
 ```
 #### Multiple packages
 The paths above assume that there is only one package, and that WordPress and the lando app is set up in the package directory.
@@ -176,10 +165,10 @@ You have to modifiy the lando file as follows:
      ```yaml
      deploy-plugin:
          cmd:
-           - appserver: modig-lan.sh MOD_INP_ENV=plugin_env MOD_INP_SCRIPT=deploy
+           - appserver: modig-lando.sh MOD_INP_ENV=plugin_env MOD_INP_SCRIPT=deploy
      deploy-theme:
          cmd:
-           - appserver: modig-lan.sh MOD_INP_ENV=theme_env MOD_INP_SCRIPT=deploy
+           - appserver: modig-lando.sh MOD_INP_ENV=theme_env MOD_INP_SCRIPT=deploy
      ```
 
 ### Input variables

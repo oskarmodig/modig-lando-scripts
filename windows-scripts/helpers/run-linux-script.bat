@@ -4,10 +4,10 @@ setlocal enabledelayedexpansion
 
 if not defined MODIG_LINUX_USER (
     echo Running linux script %1
-    wsl bash -c -i "modig-lin.sh %1 windows %2"
+    wsl bash -c -i "modlan.sh %1 windows %2"
 ) else (
     echo Running linux script %1, as user %MODIG_LINUX_USER%
-    wsl sudo -u %MODIG_LINUX_USER% bash -c -i "modig-lin.sh %1 windows %2"
+    wsl sudo -u %MODIG_LINUX_USER% bash -c -i "modlan.sh %1 windows %2"
 )
 
 REM Check for errors in the WSL command
