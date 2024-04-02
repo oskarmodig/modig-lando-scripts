@@ -21,12 +21,12 @@ if not defined MODIG_NGROK_FULL_URL (
     :: Get the https url from lando
     FOR /F "usebackq tokens=*" %%a IN (`lando info --format json ^| jq ".[0].urls[3]"`) DO SET MODIG_NGROK_FULL_URL=%%~a
 )
+:: Extract the protocol (http or https)
+for /f "tokens=1 delims=:" %%a in ("!MODIG_NGROK_FULL_URL!") do set PROTOCOL=%%a
 
 :: Check if the URL contains a port
 echo.!MODIG_NGROK_FULL_URL! | findstr /R /C:":.*:" >nul
 if errorlevel 1 (
-    :: Extract the protocol (http or https)
-    for /f "tokens=1 delims=:" %%a in ("!MODIG_NGROK_FULL_URL!") do set PROTOCOL=%%a
 
     :: Remove any trailing slash
     IF "!MODIG_NGROK_FULL_URL:~-1!"=="/" (
@@ -56,14 +56,13 @@ if defined MODIG_NGROK_DOMAIN (
     SET "FLAGS=%FLAGS% --domain=%MODIG_NGROK_DOMAIN%"
 )
 
-if defined MODIG_NGROK_OATH_GOOGLE (
+if defined MODIG_NGROK_OAUTH_GOOGLE (
     REM Add new flag to FLAGS variable
     SET "FLAGS=%FLAGS% --oauth=google"
 ) else (
-    if defined MODIG_NGROK_OATH_GOOGLE_DOMAIN (
+    if defined MODIG_NGROK_OAUTH_GOOGLE_DOMAIN (
         REM Add new flag to FLAGS variable
-        SET "FLAGS=%FLAGS% --oauth=google"
-        SET "FLAGS=%FLAGS% --oauth-allow-domain=%MODIG_NGROK_OATH_GOOGLE_DOMAIN%"
+        SET "FLAGS=%FLAGS% --oauth=google --oauth-allow-domain=%MODIG_NGROK_OAUTH_GOOGLE_DOMAIN%"
     )
 )
 
@@ -73,7 +72,12 @@ start /b ngrok http %FLAGS% "%MODIG_NGROK_FULL_URL%"
 :: Pause for 2 seconds to give ngrok time to start
 timeout /t 2 >null
 
-:: Query the ngrok API for the tunnel information and parse it to get the public URL
-for /f "delims=" %%i in ('powershell -Command "$url = '\''!MODIG_NGROK_FULL_URL!'\''; (Invoke-RestMethod http://localhost:4040/api/tunnels).tunnels | Where-Object { $_.config.addr -eq $url } | Select-Object -ExpandProperty public_url -First 1"') do set "NGROK_URL=%%i"
+if defined MODIG_NGROK_DOMAIN (
+    REM Add new flag to FLAGS variable
+    SET NGROK_URL="%PROTOCOL%://%MODIG_NGROK_DOMAIN%"
+) else (
+    :: Query the ngrok API for the tunnel information and parse it to get the public URL
+    for /f "delims=" %%i in ('powershell -File "helpers/get-ngrok-url.ps1" -url "%MODIG_NGROK_FULL_URL%"') do set "NGROK_URL=%%i"
+)
 
-call "%~dp0helpers\run-linux-script.bat" ngrok-config %NGROK_URL%
+call "%~dp0helpers\run-linux-script.bat" ngrok-config "%NGROK_URL%"
