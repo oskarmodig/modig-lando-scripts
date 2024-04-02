@@ -1,14 +1,26 @@
 #!/bin/bash
 
+echo_wp_path() {
+    local wordpress_path
+    if [ -n "$MOD_VAR_WP_PATH" ]; then
+        wordpress_path="$MOD_VAR_PACKAGE_PATH/$MOD_VAR_WP_PATH"
+    elif [ -n "$MODIG_WP_PATH" ]; then
+        wordpress_path="$MODIG_WP_PATH"
+    else
+        wordpress_path="wordpress"
+    fi
+    echo "$wordpress_path"
+}
+
 call_wp_without_retry() {
     local wordpress_path
-    wordpress_path="$MOD_VAR_PACKAGE_PATH/$MOD_VAR_WP_PATH"
+    wordpress_path=$( echo_wp_path )
     lando wp "$@" --path="$wordpress_path"
 }
 
 call_wp() {
     local wordpress_path
-    wordpress_path="$MOD_VAR_PACKAGE_PATH/$MOD_VAR_WP_PATH"
+    wordpress_path=$( echo_wp_path )
 
     echo_progress "Running WP command: wp $* in $wordpress_path"
     while true; do

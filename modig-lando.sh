@@ -25,7 +25,7 @@ MOD_LOC_SCRIPT_TYPE=lando
 # Basic script setup
 . "$MOD_LOC_SCRIPTS_BASE_DIR/_setup-scripts.sh"
 
-. "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/load-lando-env-vars.sh"
+. "$MOD_LOC_SCRIPTS_BASE_DIR/lando-scripts/helpers/load-lando-env-vars.sh"
 
 # Determine the package name, either from the provided variable or from the LANDO_APP_NAME
 if [ -z "$MOD_VAR_PACKAGE_DEV_NAME" ]; then

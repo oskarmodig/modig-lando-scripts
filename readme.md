@@ -200,9 +200,10 @@ Again, these variables are set per lando app, rather than per package.
 They are mainly used by the Windows and Linux scripts (modlan.bat and modlan.sh), run outside the lando app container.
 ##### General global environment variables
 
-| Variable         | Description                                                                                                     | Default value                                                           |
-|------------------|-----------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| MODIG_LINUX_USER | For Windows scripts, what user in your WSL instance to run commands as.                                         | [not set, script will default to the default user for the WSL instance] |
+| Variable         | Description                                                                         | Default value                                                           |
+|------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| MODIG_LINUX_USER | For Windows scripts, what user in your WSL instance to run commands as.             | [not set, script will default to the default user for the WSL instance] |
+| MODIG_WP_PATH    | Relative path to WordPress (from cwd, which should be same dir as .lando.yml file). | `wordpress`                                                             |
 
 ##### Setup global environment variables
 Variables for site setup, run with `modlan.sh setup` or `modlan.bat setup`.
