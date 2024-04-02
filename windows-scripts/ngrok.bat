@@ -29,7 +29,7 @@ if errorlevel 1 (
     for /f "tokens=1 delims=:" %%a in ("!MODIG_NGROK_FULL_URL!") do set PROTOCOL=%%a
 
     :: Remove any trailing slash
-    IF "!MODIG_NGROK_FULL_URL:~-1!"=="\" (
+    IF "!MODIG_NGROK_FULL_URL:~-1!"=="/" (
         REM If it is, then remove the last character
         SET "MODIG_NGROK_FULL_URL=!MODIG_NGROK_FULL_URL:~0,-1!"
     )
