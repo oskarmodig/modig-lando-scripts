@@ -6,6 +6,9 @@ execute_part() {
     part_name=${part_name//-/_}
     part_name=${part_name^^}
 
+    # Get the script name from the input script, if not passed as second argument
+    local input_script_name=${2:-$MOD_INP_SCRIPT}
+
     local var_name="MOD_LOC_SKIP_$part_name"
 
     # if variable MOD_LOC_SKIP_[PART_NAME] is set to true, skip the part
@@ -14,7 +17,7 @@ execute_part() {
         return
     fi
 
-    local script_to_execute="$MOD_LOC_CURRENT_SCRIPT_DIR/parts/$MOD_INP_SCRIPT/$1.sh"
+    local script_to_execute="$MOD_LOC_CURRENT_SCRIPT_DIR/parts/$input_script_name/$1.sh"
 
     while true; do
         if execute_part_inner "$script_to_execute"; then

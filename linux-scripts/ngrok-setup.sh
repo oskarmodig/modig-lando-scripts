@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-execute_part "setup-ngrok"
+execute_part "setup-ngrok" "ngrok"

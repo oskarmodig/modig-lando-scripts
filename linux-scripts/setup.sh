@@ -11,7 +11,7 @@ fi
 
 # Build lando
 execute_part "install-wordpress"
-execute_part "setup-ngrok"
+execute_part "setup-ngrok" "ngrok"
 
 if [ -n "$MODIG_SETUP_PLUGINS" ]; then
     declare -A special_plugins
