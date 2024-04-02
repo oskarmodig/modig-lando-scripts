@@ -11,8 +11,8 @@
     }
   ],
   "bin": [
-    "modig-lan.sh",
-    "modig-lin.sh",
-    "modig-win.bat"
+    "modig-lando.sh",
+    "modlan.sh",
+    "modlan.bat"
   ]
 }

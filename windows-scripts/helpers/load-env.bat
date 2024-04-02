@@ -1,7 +1,7 @@
 @echo off
 
-call "%~dp0read-env-file.bat" .setup.modig.env
-call "%~dp0read-env-file.bat" .setup.modig.secret.env
+call "%~dp0read-env-file.bat" .modig.lando.global.env
+call "%~dp0read-env-file.bat" .modig.lando.local.env
 
 @call "%temp%\modigLandoScriptEnvVars.bat"
 @del "%temp%\modigLandoScriptEnvVars.bat"

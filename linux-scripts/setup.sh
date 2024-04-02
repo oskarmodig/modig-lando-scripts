@@ -1,7 +1,7 @@
 #!/bin/bash
 
-load_env_file ".setup.modig.env"
-load_env_file ".setup.modig.secret.env"
+load_env_file ".modig.lando.global.env"
+load_env_file ".modig.lando.local.env"
 
 # Start lando if this is not a Windows machine
 if [ "$MOD_LOC_SCRIPT_ENVIRONMENT" != "windows" ]; then

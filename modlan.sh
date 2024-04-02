@@ -39,7 +39,6 @@ MOD_LOC_SCRIPT_CALLED_FROM=$(pwd)
 # shellcheck disable=SC2034
 MOD_LOC_WORDPRESS_PATH="$MOD_LOC_SCRIPT_CALLED_FROM/wordpress"
 
-## These were intended to be used to load .env files from .lando.yml, but it's not being used anywhere.
 # Path to lando config file
 # shellcheck disable=SC2034
 MOD_LOC_LANDO_FILE="$MOD_LOC_SCRIPT_CALLED_FROM/.lando.yml"
