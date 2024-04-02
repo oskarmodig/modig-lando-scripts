@@ -63,6 +63,11 @@ if defined MODIG_NGROK_OAUTH_GOOGLE (
     if defined MODIG_NGROK_OAUTH_GOOGLE_DOMAIN (
         REM Add new flag to FLAGS variable
         SET "FLAGS=%FLAGS% --oauth=google --oauth-allow-domain=%MODIG_NGROK_OAUTH_GOOGLE_DOMAIN%"
+    ) else (
+        if defined MODIG_NGROK_OAUTH_GOOGLE_EMAIL (
+            REM Add new flag to FLAGS variable
+            SET "FLAGS=%FLAGS% --oauth=google --oauth-allow-email=%MODIG_NGROK_OAUTH_GOOGLE_EMAIL%"
+        )
     )
 )
 
