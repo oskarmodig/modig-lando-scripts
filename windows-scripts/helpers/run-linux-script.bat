@@ -17,10 +17,10 @@ for %%a in (%*) do (
 )
 
 if not defined MODIG_SETUP_LINUX_USER (
-    echo Running linux command %1
+    echo Running linux script %1
     wsl bash -c -i "modig-lin.sh %1 windows !ARGS!"
 ) else (
-    echo Running linux command %1, as user %MODIG_SETUP_LINUX_USER%
+    echo Running linux script %1, as user %MODIG_SETUP_LINUX_USER%
     wsl sudo -u %MODIG_LINUX_USER% bash -c -i "modig-lin.sh %1 windows !ARGS!"
 )
 
