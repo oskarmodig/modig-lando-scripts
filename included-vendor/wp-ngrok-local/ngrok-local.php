@@ -123,7 +123,9 @@ class Ngrok_Local {
 		$this->local_protocol = is_ssl() ? 'https://' : 'http://';
 
 		if ( defined( 'WP_NGROK_REMOTE_URL' ) ) {
-			$this->remote_url = WP_NGROK_REMOTE_URL;
+			$this->remote_url    = WP_NGROK_REMOTE_URL;
+			$parsed_ngrok_url    = wp_parse_url( WP_NGROK_REMOTE_URL );
+			$this->remote_domain = $parsed_ngrok_url['host'];
 
 		} elseif ( ! empty( $_SERVER['HTTP_HOST'] ) ) {
 			$this->remote_domain = $_SERVER['HTTP_HOST'];
