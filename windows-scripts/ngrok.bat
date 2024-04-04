@@ -24,22 +24,9 @@ if not defined MODIG_NGROK_FULL_LOCAL_URL (
 :: Extract the protocol (http or https)
 for /f "tokens=1 delims=:" %%a in ("!MODIG_NGROK_FULL_LOCAL_URL!") do set PROTOCOL=%%a
 
-:: Check if the URL contains a port
-echo.!MODIG_NGROK_FULL_LOCAL_URL! | findstr /R /C:":.*:" >nul
-if errorlevel 1 (
-
-    :: Remove any trailing slash
-    IF "!MODIG_NGROK_FULL_LOCAL_URL:~-1!"=="/" (
-        REM If it is, then remove the last character
-        SET "MODIG_NGROK_FULL_LOCAL_URL=!MODIG_NGROK_FULL_LOCAL_URL:~0,-1!"
-    )
-
-    :: No port found, decide which port to add based on the protocol
-    if "!PROTOCOL!"=="http" (
-        set MODIG_NGROK_FULL_LOCAL_URL=!MODIG_NGROK_FULL_LOCAL_URL!:80
-    ) else if "!PROTOCOL!"=="https" (
-        set MODIG_NGROK_FULL_LOCAL_URL=!MODIG_NGROK_FULL_LOCAL_URL!:443
-    )
+:: Remove any trailing slash
+IF "!MODIG_NGROK_FULL_LOCAL_URL:~-1!"=="/" (
+    SET "MODIG_NGROK_FULL_LOCAL_URL=!MODIG_NGROK_FULL_LOCAL_URL:~0,-1!"
 )
 
 :: Remove the protocol
@@ -48,13 +35,10 @@ set "MODIG_LOCAL_URL_WITHOUT_PROTOCOL=%MODIG_NGROK_FULL_LOCAL_URL:*//=%"
 :: Check for a leading double slash (//) and remove it, if present
 if "%MODIG_LOCAL_URL_WITHOUT_PROTOCOL:~0,2%"=="//" set "MODIG_LOCAL_URL_WITHOUT_PROTOCOL=%MODIG_LOCAL_URL_WITHOUT_PROTOCOL:~2%"
 
-SET MODIG_NGROK_URL=%MODIG_NGROK_FULL_LOCAL_URL:~8%
-SET MODIG_NGROK_URL=%MODIG_NGROK_URL:~0,-1%
-
-echo Starting ngrok for %MODIG_NGROK_URL% with name %MODIG_NGROK_FULL_LOCAL_URL%
+echo Starting ngrok for %MODIG_NGROK_FULL_LOCAL_URL%
 
 REM Define initial flag variable
-SET "FLAGS=--host-header=%MODIG_LOCAL_URL_WITHOUT_PROTOCOL%"
+SET "FLAGS=--host-header=rewrite"
 
 if defined MODIG_NGROK_REMOTE_DOMAIN (
     REM Add new flag to FLAGS variable
@@ -84,10 +68,10 @@ timeout /t 2
 
 if defined MODIG_NGROK_REMOTE_DOMAIN (
     REM Add new flag to FLAGS variable
-    SET NGROK_URL="%PROTOCOL%://%MODIG_NGROK_REMOTE_DOMAIN%"
+    SET MODIG_NGROK_REMOTE_URL="%PROTOCOL%://%MODIG_NGROK_REMOTE_DOMAIN%"
 ) else (
     :: Query the ngrok API for the tunnel information and parse it to get the public URL
-    for /f "delims=" %%i in ('powershell -File "%~dp0helpers\get-ngrok-url.ps1" -url "%MODIG_NGROK_FULL_LOCAL_URL%"') do set "NGROK_URL=%%i"
+    for /f "delims=" %%i in ('powershell -File "%~dp0helpers\get-ngrok-url.ps1" -url "%MODIG_NGROK_FULL_LOCAL_URL%"') do set "MODIG_NGROK_REMOTE_URL=%%i"
 )
 
-call "%~dp0helpers\run-linux-script.bat" ngrok-config "%NGROK_URL%"
+call "%~dp0helpers\run-linux-script.bat" ngrok-config "%MODIG_NGROK_REMOTE_URL%"
