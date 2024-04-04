@@ -84,10 +84,6 @@ class Ngrok_Local {
 				'SITECOOKIEPATH'  => '.',
 			);
 
-			if ( is_multisite() ) {
-				$constants_to_set['DOMAIN_CURRENT_SITE'] = $this->remote_domain;
-			}
-
 			foreach ( $constants_to_set as $constant => $value ) {
 				if ( ! defined( $constant ) ) {
 					define( $constant, $value );
@@ -123,10 +119,19 @@ class Ngrok_Local {
 
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo str_replace(
-				$this->local_url,
-				$this->remote_url,
+				array(
+					$this->local_url,
+					substr( wp_json_encode( $this->local_url ), 1, -1 ),
+					rawurlencode( $this->local_url ),
+				),
+				array(
+					$this->remote_url,
+					substr( wp_json_encode( $this->remote_url ), 1, -1 ),
+					rawurlencode( $this->remote_url ),
+				),
 				$response
 			);
+
 			exit;
 		}
 	}
