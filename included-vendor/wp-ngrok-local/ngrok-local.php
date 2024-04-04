@@ -35,6 +35,13 @@ class Ngrok_Local {
 	private string $local_protocol;
 
 	/**
+	 * The local domain of the site.
+	 *
+	 * @var string
+	 */
+	private string $local_domain;
+
+	/**
 	 * The remote ngrok URL of the site.
 	 *
 	 * @var string
@@ -60,16 +67,26 @@ class Ngrok_Local {
 			return;
 		}
 
-		$this->local_url   = site_url();
+		$this->local_url    = site_url();
+		$parsed_local_url   = wp_parse_url( $this->local_url );
+		$this->local_domain = $parsed_local_url['host'];
+
 		$remote_url_loaded = $this->load_remote_url();
 
 		if ( $remote_url_loaded ) {
 			$constants_to_set = array(
-				'WP_SITEURL'     => $this->remote_url,
-				'WP_HOME'        => $this->remote_url,
-				'COOKIE_DOMAIN'  => $this->remote_domain,
-				'SITECOOKIEPATH' => '.',
+				'WP_SITEURL'      => $this->remote_url,
+				'WP_HOME'         => $this->remote_url,
+				'WP_CONTENT_URL'  => $this->remote_url . '/wp-content',
+				'WP_PLUGIN_URL'   => $this->remote_url . '/wp-content/plugins',
+				'WPMU_PLUGIN_URL' => $this->remote_url . '/wp-content/mu-plugins',
+				'COOKIE_DOMAIN'   => $this->remote_domain,
+				'SITECOOKIEPATH'  => '.',
 			);
+
+			if ( is_multisite() ) {
+				$constants_to_set['DOMAIN_CURRENT_SITE'] = $this->remote_domain;
+			}
 
 			foreach ( $constants_to_set as $constant => $value ) {
 				if ( ! defined( $constant ) ) {
