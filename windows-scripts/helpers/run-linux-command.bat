@@ -5,7 +5,7 @@ REM Pass arguments from batch file to shell script in WSL
 
 if not defined MODIG_LINUX_USER (
     echo Running linux command %1
-    wsl sudo bash -c -i "%1"
+    wsl bash -c -i "%1"
 ) else (
     echo Running linux command %1, as user %MODIG_LINUX_USER%
     wsl sudo -u %MODIG_LINUX_USER% bash -c "%1"
