@@ -60,7 +60,7 @@ if [ -f "composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
 fi
 
 # Run npm operations if $MOD_VAR_SKIP_NPM is not set, and package.json exist.
-if [ command_exists npm ] && [ -f "package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]; then
+if command_exists npm && [ -f "package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]; then
   #Check if a build script is defined in the package.json file
   if [ -n "$(jq -r '.scripts.build' package.json)" ]; then
     echo_progress "Running 'npm install'"
@@ -68,6 +68,8 @@ if [ command_exists npm ] && [ -f "package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]
     echo_progress "Running 'npm run build'"
     npm run build
   fi
+else
+  echo_notice "npm not found or package.json not found, skipping npm operations."
 fi
 
 if [ -n "$MOD_VAR_REMOVE_DIR_AFTER_BUILD" ]; then
@@ -91,8 +93,8 @@ if [ -n "$MOD_INP_TEST" ]; then
         echo "No main plugin file found."
         exit 1
     fi
-    # Append " - Test" to the plugin name
-    sed -i 's/\(Plugin Name:.*[^\s]\)\s*$/\1 - Test/' "$PLUGIN_FILE"
+    # Prepend "TEST - " to the plugin name
+    sed -i 's/\(Plugin Name: \)/\1TEST - /' "$PLUGIN_FILE"
 fi
 
 cd ..
