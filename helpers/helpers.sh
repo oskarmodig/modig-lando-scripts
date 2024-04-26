@@ -25,3 +25,16 @@ change_dir() {
 url_encode() {
   python3 -c "import urllib.parse; print(urllib.parse.quote_plus('$1'))"
 }
+
+# Function to find the main plugin file
+# Takes one argument: the directory to search in
+find_main_plugin_file() {
+    local plugin_dir=$1
+    for file in "$plugin_dir"/*.php; do
+        # Check if the file contains a Plugin Name declaration
+        if grep -q "Plugin Name:" "$file"; then
+            echo "$file"
+            return
+        fi
+    done
+}

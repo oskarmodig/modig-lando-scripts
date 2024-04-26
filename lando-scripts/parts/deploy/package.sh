@@ -85,6 +85,16 @@ rm webpack.config.js -f
 rm babel.config.json -f
 rm -rf node_modules
 
+if [ -n "$MOD_INP_TEST" ]; then
+    PLUGIN_FILE=$(find_main_plugin_file ".")
+    if [[ -z "$PLUGIN_FILE" ]]; then
+        echo "No main plugin file found."
+        exit 1
+    fi
+    # Append " - Test" to the plugin name
+    sed -i '/^ \* Plugin Name:/ s/$/ - Test/' "$PLUGIN_FILE"
+fi
+
 cd ..
 
 # Function to create a zip file
