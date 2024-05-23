@@ -46,4 +46,4 @@ add_strict_types_to_directory() {
 excluded_dirs=("wordpress" "vendor" "node_modules" "deploy" "testsuite")
 
 # Run the script
-add_strict_types_to_directory "$MOD_VAR_PACKAGE_PATH" "${excluded_dirs[@]}"
+add_strict_types_to_directory "./" "${excluded_dirs[@]}"
