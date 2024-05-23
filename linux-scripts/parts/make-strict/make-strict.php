@@ -70,6 +70,6 @@ function add_strict_types_after_docblock( string $content ): string {
 }
 
 // Set the path to your project directory.
-$project_path  = '/app';
+$project_path  = './';
 $excluded_dirs = array( 'wordpress', 'vendor', 'node_modules', 'deploy', 'testsuite' );
 add_strict_types_to_directory( $project_path, $excluded_dirs );
