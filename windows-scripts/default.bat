@@ -2,7 +2,7 @@
 
 echo "Start Windows script %MODIG_WIN_SCRIPT%"
 
-REM Call linux script "setup"
+REM Call linux script
 call "%~dp0helpers\run-linux-script.bat" %MODIG_WIN_SCRIPT%
 
 REM Check for errors in the lando rebuild command
