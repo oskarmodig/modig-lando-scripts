@@ -79,6 +79,13 @@ if [ -n "$MOD_VAR_REMOVE_DIR_AFTER_BUILD" ]; then
     done
 fi
 
+if [ -n "$MOD_VAR_REMOVE_FILES_AFTER_BUILD" ]; then
+    IFS=',' read -ra REMOVE_FILES_AFTER_BUILD <<< "$MOD_VAR_REMOVE_FILES_AFTER_BUILD"
+    for item in "${REMOVE_FILES_AFTER_BUILD[@]}"; do
+        rm "$item"
+    done
+fi
+
 rm composer.json -f
 rm composer.lock -f
 rm package.json -f
