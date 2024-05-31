@@ -66,8 +66,8 @@ fi
 if command_exists npm && [ -f "package.json" ] && [ -z "$MOD_VAR_SKIP_NPM" ]; then
   #Check if a build script is defined in the package.json file
   if [ -n "$(jq -r '.scripts.build' package.json)" ]; then
-    echo_progress "Running 'npm install'"
-    npm install
+    echo_progress "Running 'npm ci'"
+    npm ci
     echo_progress "Running 'npm run build'"
     npm run build
   fi
