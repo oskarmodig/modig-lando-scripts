@@ -3,10 +3,10 @@
 change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
 
 # Set up the temporary directory
-MOD_LOC_TEMP_DIR=$MOD_VAR_PACKAGE_NAME
+MOD_LOC_TEMP_DIR_NAME=$MOD_VAR_PACKAGE_NAME
 
 if [ -n "$MOD_INP_TEST" ]; then
-    MOD_LOC_TEMP_DIR="$MOD_LOC_TEMP_DIR-test"
+    MOD_LOC_TEMP_DIR_NAME="$MOD_LOC_TEMP_DIR_NAME-test"
 fi
 
 # Remove existing deploy directory, and create the temporary directory for the package
@@ -17,9 +17,12 @@ else
     MOD_LOC_DESTINATION_DIR="$MOD_VAR_PACKAGE_PATH/deploy/v$MOD_LOC_PACKAGE_VER"
 fi
 
+TMP_DIR_BASE="/tmp/lando_build"
+TMP_DIR="$TMP_DIR_BASE/$MOD_LOC_TEMP_DIR_NAME"
+
 echo_progress "Preparing for deployment"
 remove_dir "$MOD_LOC_DESTINATION_DIR"
-create_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR"
+create_dir "$TMP_DIR"
 
 # Define and execute rsync options to copy files to the temporary directory
 # The script excludes certain files and directories from being copied
@@ -49,9 +52,9 @@ if [ -n "$MOD_VAR_EXTRA_EXCLUDES" ]; then
     done
 fi
 
-rsync "${rsync_options[@]}" . "deploy/_tmp/$MOD_LOC_TEMP_DIR"
+rsync "${rsync_options[@]}" . "$TMP_DIR"
 
-change_dir "deploy/_tmp/$MOD_LOC_TEMP_DIR" "Could not enter inner temporary directory."
+change_dir "$TMP_DIR" "Could not enter inner temporary directory."
 
 # Run composer operations if $MOD_VAR_SKIP_COMPOSER is not set, and composer.json exist.
 if [ -f "composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
@@ -108,9 +111,9 @@ cd ..
 
 # Function to create a zip file
 create_zip() {
-    local base_name="$1"       # Name of the zip file, and the source directory inside if include_dir is true
+    local base_name="$1"       # Name of the zip file and the source directory inside
 
-    local source_dir="$MOD_LOC_TEMP_DIR"                     # Source directory to zip
+    local source_dir="$MOD_LOC_TEMP_DIR_NAME"                # Source directory to zip
     local json_destination_name="$MOD_VAR_PACKAGE_NAME.json" # Name of the destination JSON file
 
     if [ -n "$MOD_INP_TEST" ]; then
@@ -118,9 +121,9 @@ create_zip() {
         json_destination_name="$MOD_VAR_PACKAGE_NAME-test.json"
     fi
 
-    # Rename $MOD_LOC_TEMP_DIR if not already named as base_name
-    if [ "$MOD_LOC_TEMP_DIR" != "$base_name" ]; then
-        mv "$MOD_LOC_TEMP_DIR" "$base_name"
+    # Rename $source_dir if not already named as base_name
+    if [ "$source_dir" != "$base_name" ]; then
+        mv "$source_dir" "$base_name"
         source_dir="$base_name"
     fi
 
@@ -151,20 +154,18 @@ create_zip() {
       fi
     fi
 
-    # Rename $MOD_LOC_TEMP_DIR back to its original name
-    if [ "$MOD_LOC_TEMP_DIR" != "$base_name" ]; then
-        mv "$base_name" "$MOD_LOC_TEMP_DIR"
+    # Rename $MOD_LOC_TEMP_DIR_NAME back to its original name, for any further zip creations.
+    if [ "$MOD_LOC_TEMP_DIR_NAME" != "$base_name" ]; then
+        mv "$base_name" "$MOD_LOC_TEMP_DIR_NAME"
     fi
 }
 
 # Always create main zip file for WP
 create_zip "$MOD_VAR_PACKAGE_NAME"
 
-change_dir "deploy" "Temporary directory not found." true
-
 # Clean up by removing the temporary directory
 echo_progress "Removing TEMP DIR"
-remove_dir "_tmp"
+remove_dir "$TMP_DIR_BASE"
 
 # Final message indicating the completion of the deployment process
 echo_progress "Deploy finished"
