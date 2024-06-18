@@ -1,5 +1,7 @@
 #!/bin/bash
 
+change_dir "$MOD_VAR_PACKAGE_PATH" "Package path not found."
+
 MOD_VAR_GIT_TAG_PREFIX=${MOD_VAR_GIT_TAG_PREFIX:-"v"}
 
 # URL encode the password

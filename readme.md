@@ -37,7 +37,7 @@ They are run with the `modig-lando.sh` script, and the input variables are set w
 - WordPress setup is run with `modlan setup`
 - WordPress destruction is run with `modlan destroy`
 - Starting ngrok is run with `modlan ngrok`
-- Stopping ngrok is run with `modlan ngrok-kill`
+- Stopping ngrok is run with `modlan ngrokk`
 
 For all the commands above, you can also pass your linux username as the second argument, if it is not the default user in WSL.
 

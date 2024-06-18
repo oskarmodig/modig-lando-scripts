@@ -97,6 +97,7 @@ rm webpack.config.js -f
 rm babel.config.json -f
 rm -rf node_modules
 
+# TODO: Update to work with themes
 if [ -n "$MOD_INP_TEST" ]; then
     PLUGIN_FILE=$(find_main_plugin_file ".")
     if [[ -z "$PLUGIN_FILE" ]]; then
