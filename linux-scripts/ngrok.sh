@@ -60,8 +60,9 @@ sleep 2
 if [ -n "$MODIG_NGROK_REMOTE_DOMAIN" ]; then
     MODIG_NGROK_REMOTE_URL="$PROTOCOL://$MODIG_NGROK_REMOTE_DOMAIN"
 else
-    # Query the ngrok API for the tunnel information and parse it to get the public URL
-    MODIG_NGROK_REMOTE_URL=$(./get-ngrok-url.sh -url "$MODIG_NGROK_FULL_LOCAL_URL")
+    # Query the ngrok API for the tunnel information and parse it to get the public URL directly in the script
+    MODIG_NGROK_REMOTE_URL=$(curl -s http://localhost:4040/api/tunnels | \
+    jq -r --arg url "$MODIG_NGROK_FULL_LOCAL_URL" '.tunnels | map(select(.config.addr == $url)) | .[0].public_url')
 fi
 
 NGROK_URL="$MODIG_NGROK_REMOTE_URL"
