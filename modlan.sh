@@ -41,6 +41,9 @@ MOD_LOC_WORDPRESS_PATH="$MOD_LOC_SCRIPT_CALLED_FROM/wordpress"
 
 . "$MOD_LOC_SCRIPTS_BASE_DIR/helpers/parse-main-variables.sh"
 
+load_env_file ".modig.lando.global.env"
+load_env_file ".modig.lando.local.env"
+
 # Default script to run
 MOD_INP_SCRIPT=${1:-"setup"}
 
