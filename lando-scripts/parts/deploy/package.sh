@@ -99,6 +99,8 @@ rm -rf node_modules
 
 # TODO: Update to work with themes
 if [ -n "$MOD_INP_TEST" ]; then
+  # IF MOD_VAR_PACKAGE_TYPE = plugin
+  if [ "$MOD_VAR_PACKAGE_TYPE" = "plugin" ]; then
     PLUGIN_FILE=$(find_main_plugin_file ".")
     if [[ -z "$PLUGIN_FILE" ]]; then
         echo "No main plugin file found."
@@ -106,6 +108,15 @@ if [ -n "$MOD_INP_TEST" ]; then
     fi
     # Prepend "TEST - " to the plugin name
     sed -i 's/\(Plugin Name: \)/\1TEST - /' "$PLUGIN_FILE"
+  elif [ "$MOD_VAR_PACKAGE_TYPE" = "theme" ]; then
+    THEME_FILE=$(find_main_theme_file ".")
+    if [[ -z "$THEME_FILE" ]]; then
+        echo "No main theme file found."
+        exit 1
+    fi
+    # Prepend "TEST - " to the theme name
+    sed -i 's/\(Theme Name: \)/\1TEST - /' "$THEME_FILE"
+  fi
 fi
 
 cd ..

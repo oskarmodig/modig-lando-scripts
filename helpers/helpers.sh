@@ -39,6 +39,19 @@ find_main_plugin_file() {
     done
 }
 
+# Function to find the main theme file
+# Takes one argument: the directory to search in
+find_main_theme_file() {
+    local theme_dir=$1
+    for file in "$theme_dir"/*.css; do
+        # Check if the file contains a Theme Name declaration
+        if grep -q "Theme Name:" "$file"; then
+            echo "$file"
+            return
+        fi
+    done
+}
+
 
 command_exists() {
     command -v "$1" >/dev/null 2>&1
