@@ -1,5 +1,10 @@
 echo_progress "Installing WooCommerce"
-call_wp plugin install woocommerce --activate
+
+if [ -n "$MODIG_SETUP_WC_VERSION" ]; then
+    call_wp plugin install woocommerce --activate --version="$MODIG_SETUP_WC_VERSION"
+else
+    call_wp plugin install woocommerce --activate
+fi
 
 echo_progress "Setting up WooCommerce"
 

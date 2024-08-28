@@ -5,7 +5,13 @@ echo_progress "Installing WordPress"
 # Remove any existing wordpress folder
 lando ssh -c "rm -rf \"$MOD_LOC_ABSOLUT_WP_PATH\" && mkdir \"$MOD_LOC_ABSOLUT_WP_PATH\""
 
-call_wp core download
+
+if [ -n "$MODIG_SETUP_WP_VERSION" ]; then
+    call_wp core download --version="$MODIG_SETUP_WP_VERSION"
+else
+    call_wp core download
+fi
+
 call_wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --dbhost=database --dbprefix=wp_
 call_wp core install --url="$MOD_LOC_LANDO_APP_NAME".lndo.site --title="$MOD_LOC_LANDO_APP_NAME DEV" --admin_user=admin --admin_password=password --admin_email=user@example.com
 
