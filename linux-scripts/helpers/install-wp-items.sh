@@ -31,5 +31,9 @@ install_woocommerce() {
 
 install_storefront() {
     echo_progress "Installing Storefront"
-    call_wp theme install storefront --activate
+    if [ -n "$MODIG_SETUP_SF_VERSION" ]; then
+        call_wp theme install storefront --version="$MODIG_SETUP_SF_VERSION"
+    else
+        call_wp theme install storefront
+    fi
 }
