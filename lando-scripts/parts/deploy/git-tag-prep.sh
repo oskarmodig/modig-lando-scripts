@@ -16,4 +16,4 @@ echo_prompt "Enter a git tag message:" true
 read -r MOD_READ_GIT_TAG_MSG
 
 echo_prompt "Enter your git password:" true
-read -r MOD_READ_GIT_PASSWORD
+read -r -s MOD_READ_GIT_PASSWORD
