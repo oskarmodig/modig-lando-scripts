@@ -58,6 +58,12 @@ function scan_directory( string $directory, string $original_namespace, string $
 $alias_content = scan_directory( $directory, $original_namespace, $package_namespace );
 
 // Write the alias statements to ide_helper.php.
-file_put_contents( $output_directory . '/modlan_ns_alias_helper.php', "<?php\n//phpcs:disable\n" . $alias_content ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+
+try {
+	file_put_contents( $output_directory . '/modlan_ns_alias_helper.php', "<?php\n//phpcs:disable\n" . $alias_content );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+} catch ( Exception $e ) {
+	echo "Failed to generate alias in $output_directory.\n";
+	exit( 1 );
+}
 
 echo "Class alias file generated successfully in $output_directory.\n";
