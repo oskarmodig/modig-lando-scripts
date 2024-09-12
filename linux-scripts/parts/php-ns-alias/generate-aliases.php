@@ -55,6 +55,6 @@ function scan_directory( string $directory, string $original_namespace, string $
 $alias_content = scan_directory( $directory, $original_namespace, $package_namespace );
 
 // Write the alias statements to ide_helper.php.
-file_put_contents( __DIR__ . '/ide_helper.php', "<?php\n//phpcs:disable\n" . $alias_content ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+file_put_contents( __DIR__ . '/modlan_ns_alias_helper.php', "<?php\n//phpcs:disable\n" . $alias_content ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 
 echo "Class alias file generated successfully.\n";
