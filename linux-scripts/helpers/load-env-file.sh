@@ -18,6 +18,6 @@ load_env_file() {
     # remove the tmp file
     rm "$tmp_file"
   else
-    echo_error "Warning: .env file '$env_file' not found."
+    echo_notice ".env file '$env_file' not found."
   fi
 }
