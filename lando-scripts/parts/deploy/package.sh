@@ -43,7 +43,7 @@ rsync_options=(
     --exclude "*.DS_Store*"
     --exclude /vendor
     --exclude "phpunit.xml.dist"
-    --exclude "modlan_ns_alias_helper.php"
+    --exclude "scoper.inc.php"
 )
 
 if [ -n "$MOD_VAR_EXTRA_EXCLUDES" ]; then
