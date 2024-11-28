@@ -197,11 +197,12 @@ They are mainly used by the Windows and Linux scripts (modlan.bat and modlan.sh)
 ##### Setup global environment variables
 Variables for site setup, run with `modlan.sh setup` or `modlan.bat setup`.
 
-| Variable              | Description                                                                                                                                                                      | Default value |
-|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| MODIG_SETUP_PLUGINS   | Comma separated list of plugin names and/or URLs. These plugins are installed on site setup. Note that if `woocommerce` is one of them, a special WooCommerce setup will be run. | [not set]     |
-| MODIG_SETUP_THEMES    | Comma separated list of theme names and/or URLs. These themes are installed on site setup. Note that if `storefront` is one of them, a special Storefront setup will be run.     | [not set]     |
-| MODIG_SETUP_MULTISITE | If this is set (to anything), the site will be set up as multisite.                                                                                                              | [not set]     |
+| Variable                  | Description                                                                                                                                                                      | Default value |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| MODIG_SETUP_PLUGINS       | Comma separated list of plugin names and/or URLs. These plugins are installed on site setup. Note that if `woocommerce` is one of them, a special WooCommerce setup will be run. | [not set]     |
+| MODIG_SETUP_THEMES        | Comma separated list of theme names and/or URLs. These themes are installed on site setup. Note that if `storefront` is one of them, a special Storefront setup will be run.     | [not set]     |
+| MODIG_SETUP_MULTISITE     | If this is set (to anything), the site will be set up as multisite with subdomains.                                                                                              | [not set]     |
+| MODIG_SETUP_MULTISITE_DIR | If this is set (to anything), the site will be set up as multisite with subdirectories.                                                                                          | [not set]     |
 
 ##### NGROK global environment variables
 | Variable                        | Description                                                                                                     | Default value                                                                                    |

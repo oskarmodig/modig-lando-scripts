@@ -32,7 +32,7 @@ if [ -f "composer.json" ]; then
     lando composer install
 fi
 
-if [ -n "$MODIG_SETUP_MULTISITE" ]; then
+if [ -n "$MODIG_SETUP_MULTISITE" ] || [ -n "$MODIG_SETUP_MULTISITE_DIR" ]; then
     execute_part "setup-multisite"
 fi
 
