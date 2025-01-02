@@ -8,4 +8,4 @@ if [ -f "composer.json" ] && [ -n "$(jq -r '.scripts."scoper-prefix"' composer.j
     composer scoper-prefix
 fi
 
-lando composer update
+lando composer install
