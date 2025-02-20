@@ -2,9 +2,9 @@
 
 # If composer script "scoper-prefix" exists, run it
 if [ -f "composer.json" ] && [ -n "$(jq -r '.scripts."scoper-prefix"' composer.json)" ]; then
-    # Running in no interaction mode with config to discard changes.
-    # This is since we remove php files from the vendor dir.
-    COMPOSER_DISCARD_CHANGES=true composer update -no-interaction
+    rm -rf vendor/northmill/online-shared
+
+    composer update
 
     echo_progress "Running 'composer scoper-prefix'"
     rm -rf online-shared
