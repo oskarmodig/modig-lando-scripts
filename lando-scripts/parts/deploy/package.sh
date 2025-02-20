@@ -101,11 +101,10 @@ rm -f package-lock.json -f
 rm -f webpack.config.js -f
 rm -f babel.config.json -f
 
-rm -r online-shared/composer.json
-rm -r online-shared/composer.lock
-
 rm -rf "vendor/northmill/online-shared/.git"
 rm -rf "vendor/northmill/online-shared/php-scoper-helpers"
+rm -r "vendor/northmill/online-shared/composer.json"
+rm -r "vendor/northmill/online-shared/composer.lock"
 find "vendor/northmill/online-shared" -type f -name "*.php" -exec rm -f {} +
 find "vendor/northmill/online-shared" -type d -empty -delete
 
