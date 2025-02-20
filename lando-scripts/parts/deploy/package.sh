@@ -104,6 +104,11 @@ rm -f babel.config.json -f
 rm -r online-shared/composer.json
 rm -r online-shared/composer.lock
 
+rm -rf "vendor/northmill/online-shared/.git"
+rm -rf "vendor/northmill/online-shared/php-scoper-helpers"
+find "vendor/northmill/online-shared" -type f -name "*.php" -exec rm -f {} +
+find "vendor/northmill/online-shared" -type d -empty -delete
+
 # TODO: Update to work with themes
 if [ -n "$MOD_INP_TEST" ]; then
   # IF MOD_VAR_PACKAGE_TYPE = plugin
