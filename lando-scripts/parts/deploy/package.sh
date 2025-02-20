@@ -45,8 +45,7 @@ rsync_options=(
     --exclude "*.DS_Store*"
     --exclude /vendor
     --exclude "phpunit.xml.dist"
-    --exclude "scoper.inc.php"
-    --exclude /online-shared/php-scoper-helpers
+    --exclude /online-shared
 )
 
 if [ -n "$MOD_VAR_EXTRA_EXCLUDES" ]; then
@@ -62,6 +61,17 @@ change_dir "$TMP_DIR" "Could not enter inner temporary directory."
 
 # Run composer operations if $MOD_VAR_SKIP_COMPOSER is not set, and composer.json exist.
 if [ -f "composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
+    echo_progress "Running 'composer clear-cache'"
+    composer clear-cache
+
+    if [ -n "$(jq -r '.scripts."scoper-prefix"' composer.json)" ]; then
+        echo_progress "Running 'composer install' before scoper-prefix"
+        composer install
+
+        echo_progress "Running 'composer scoper-prefix'"
+        composer scoper-prefix
+    fi
+
     echo_progress "Running 'composer install --no-dev --optimize-autoloader'"
     composer install --no-dev --optimize-autoloader
 fi
@@ -94,13 +104,15 @@ if [ -n "$MOD_VAR_REMOVE_FILES_AFTER_BUILD" ]; then
 fi
 
 rm -rf node_modules
-rm -f composer.json -f
-rm -f composer.lock -f
-rm -f package.json -f
-rm -f package-lock.json -f
-rm -f webpack.config.js -f
-rm -f babel.config.json -f
+rm -f composer.json
+rm -f composer.lock
+rm -f package.json
+rm -f package-lock.json
+rm -f webpack.config.js
+rm -f babel.config.json
+rm -f scoper.inc.php
 
+rm -rf "online-shared/php-scoper-helpers"
 rm -rf "vendor/northmill/online-shared/.git"
 rm -rf "vendor/northmill/online-shared/php-scoper-helpers"
 rm -f "vendor/northmill/online-shared/.gitattributes"
