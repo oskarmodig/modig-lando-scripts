@@ -101,8 +101,8 @@ rm -f package-lock.json -f
 rm -f webpack.config.js -f
 rm -f babel.config.json -f
 
-rm online-shared/composer.json -f
-rm online-shared/composer.lock -f
+rm -r online-shared/composer.json
+rm -r online-shared/composer.lock
 
 # TODO: Update to work with themes
 if [ -n "$MOD_INP_TEST" ]; then
