@@ -44,7 +44,7 @@ rsync_options=(
     --exclude /vendor
     --exclude "phpunit.xml.dist"
     --exclude "scoper.inc.php"
-    --exclude "/online-shared/.git"
+    --exclude "/online-shared/.git/"
     --exclude "/online-shared/*.env"
     --exclude "/online-shared/*.yml"
     --exclude "/online-shared/*.md"
