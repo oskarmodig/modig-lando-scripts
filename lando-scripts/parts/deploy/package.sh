@@ -103,8 +103,14 @@ rm -f babel.config.json -f
 
 rm -rf "vendor/northmill/online-shared/.git"
 rm -rf "vendor/northmill/online-shared/php-scoper-helpers"
-rm -r "vendor/northmill/online-shared/composer.json"
-rm -r "vendor/northmill/online-shared/composer.lock"
+rm -f "vendor/northmill/online-shared/.gitattributes"
+rm -f "vendor/northmill/online-shared/.gitignore"
+rm -f "vendor/northmill/online-shared/.lando.public.env"
+rm -f "vendor/northmill/online-shared/.lando.secret.exampel.env"
+rm -f "vendor/northmill/online-shared/.lando.yml"
+rm -f "vendor/northmill/online-shared/composer.json"
+rm -f "vendor/northmill/online-shared/composer.lock"
+rm -f "vendor/northmill/online-shared/README.md"
 find "vendor/northmill/online-shared" -type f -name "*.php" -exec rm -f {} +
 find "vendor/northmill/online-shared" -type d -empty -delete
 
