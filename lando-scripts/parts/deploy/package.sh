@@ -44,6 +44,11 @@ rsync_options=(
     --exclude /vendor
     --exclude "phpunit.xml.dist"
     --exclude "scoper.inc.php"
+    --exclude /online-shared/.git
+    --exclude "/online-shared/*.env"
+    --exclude "/online-shared/*.yml"
+    --exclude "/online-shared/*.md"
+    --exclude /online-shared/php-scoper-helpers
 )
 
 if [ -n "$MOD_VAR_EXTRA_EXCLUDES" ]; then
@@ -97,6 +102,8 @@ rm package-lock.json -f
 rm webpack.config.js -f
 rm babel.config.json -f
 rm -rf node_modules
+rm online-shared/composer.json -f
+rm online-shared/composer.lock -f
 
 # TODO: Update to work with themes
 if [ -n "$MOD_INP_TEST" ]; then
