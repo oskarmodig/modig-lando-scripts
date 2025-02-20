@@ -29,6 +29,8 @@ create_dir "$TMP_DIR"
 # NOTE, if something is added to this list, it should also be added to the list in the readme file.
 rsync_options=(
     -av
+    --exclude="/*.sql"
+    --exclude="/*.sql.gz"
     --exclude="/.*"
     --exclude="/*.env"
     --exclude /node_modules
@@ -44,10 +46,6 @@ rsync_options=(
     --exclude /vendor
     --exclude "phpunit.xml.dist"
     --exclude "scoper.inc.php"
-    --exclude "/online-shared/.git/"
-    --exclude "/online-shared/*.env"
-    --exclude "/online-shared/*.yml"
-    --exclude "/online-shared/*.md"
     --exclude /online-shared/php-scoper-helpers
 )
 
@@ -95,13 +93,14 @@ if [ -n "$MOD_VAR_REMOVE_FILES_AFTER_BUILD" ]; then
     done
 fi
 
-rm composer.json -f
-rm composer.lock -f
-rm package.json -f
-rm package-lock.json -f
-rm webpack.config.js -f
-rm babel.config.json -f
 rm -rf node_modules
+rm -f composer.json -f
+rm -f composer.lock -f
+rm -f package.json -f
+rm -f package-lock.json -f
+rm -f webpack.config.js -f
+rm -f babel.config.json -f
+
 rm online-shared/composer.json -f
 rm online-shared/composer.lock -f
 
