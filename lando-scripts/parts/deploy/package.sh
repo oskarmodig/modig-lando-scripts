@@ -68,8 +68,10 @@ if [ -f "composer.json" ] && [ -z "$MOD_VAR_SKIP_COMPOSER" ]; then
         echo_progress "Running 'composer install' before scoper-prefix"
         composer install
 
+        rm -rf /tmp/northmill-online-shared
         echo_progress "Running 'composer scoper-prefix'"
         composer scoper-prefix
+        mv /tmp/northmill-online-shared online-shared
     fi
 
     echo_progress "Running 'composer install --no-dev --optimize-autoloader'"
