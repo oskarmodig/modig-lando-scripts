@@ -122,9 +122,20 @@ rm -f "vendor/northmill/online-shared/.gitignore"
 rm -f "vendor/northmill/online-shared/.lando.public.env"
 rm -f "vendor/northmill/online-shared/.lando.secret.example.env"
 rm -f "vendor/northmill/online-shared/.lando.yml"
-rm -f "vendor/northmill/online-shared/composer.json"
 rm -f "vendor/northmill/online-shared/composer.lock"
 rm -f "vendor/northmill/online-shared/README.md"
+
+# Handle vendor/northmill/online-shared/composer.json
+if [ -f "vendor/northmill/online-shared/composer.json" ]; then
+    version=$(jq -r '.version // empty' "vendor/northmill/online-shared/composer.json")
+    if [ -n "$version" ]; then
+        echo "{\"version\": \"$version\"}" > "vendor/northmill/online-shared/composer.json"
+    else
+        rm -f "vendor/northmill/online-shared/composer.json"
+    fi
+fi
+
+# Remove all PHP files from vendor/northmill/online-shared
 find "vendor/northmill/online-shared" -type f -name "*.php" -exec rm -f {} +
 find "vendor/northmill/online-shared" -type d -empty -delete
 
