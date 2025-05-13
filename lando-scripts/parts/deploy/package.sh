@@ -43,6 +43,7 @@ rsync_options=(
     --exclude "*.gitlab-ci.yml*"
     --exclude "*.git*"
     --exclude "*.DS_Store*"
+    --exclude "auth.example.json"
     --exclude /vendor
     --exclude "phpunit.xml.dist"
     --exclude /online-shared
@@ -113,6 +114,7 @@ rm -f package-lock.json
 rm -f webpack.config.js
 rm -f babel.config.json
 rm -f scoper.inc.php
+rm -f auth.json
 
 rm -rf "online-shared/php-scoper-helpers"
 rm -rf "vendor/northmill/online-shared/.git"
